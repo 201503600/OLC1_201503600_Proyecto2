@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="icon" href="./images/Google-Translate-32.png">
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+
+    <script src="./codemirror/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="./codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="./codemirror/theme/eclipse.css">
+    <link rel="stylesheet" href="./codemirror/theme/midnight.css">
+    <script src="./codemirror/mode/clike/clike.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Translator in Docker</title>
+</head>
+
+<body>
+    <div class="contenedor">
+        <div class="dropdown">
+            <select class="dropbtn" id="selectMenu" onchange="changeFuncMenu();">
+
+                <option value="" selected>Menu</option>
+                <option value="open">Abrir</option>
+                <option value="new">Nuevo</option>
+                <option value="save">Guardar</option>
+                <option value="saveAs">Guardar Como</option>
+
+            </select>
+        </div>
+
+        <div class="dropdown">
+            <input id="fileInput" style="display: none;" title="Abrir" type="file" size="50"
+                onchange="AbrirArchivo(this.files)" accept=".java" class="btnp">
+        </div>
+
+        <div class="dropdown">
+            <select class="dropbtn" id="selectDownload" onchange="changeFuncDownload();">
+                <div class="dropdown-content">
+                    <option value="" selected>Descargar</option>
+                    <option value="both">Ambos</option>
+                    <option value="js">JavaScript</option>
+                    <option value="py">Python</option>
+                </div>
+            </select>
+        </div>
+
+        <div class="dropdown">
+            <select class="dropbtn" id="selectReport" onchange="viewReport();">
+                <div class="dropdown-content">
+                    <option value="" selected>Reportes</option>
+                    <option value="tokens">Reporte de Tokens</option>
+                    <option value="errores">Reporte de Errores</option>
+                    <option value="grafopy">Grafo de python</option>
+                    <option value="grafojs">Grafo de javascript</option>
+                </div>
+            </select>
+        </div>
+
+        <div class="dropdown">
+            <input id="btnAnalizar" type="button" onclick="sendText();" value="Analizar" class="btnp" />
+        </div>
+
+        <div class="datos">
+            <i class="fa fa-user icon"></i>
+            <span class="label label-info">201503600</span>
+        </div>
+        <!--
+        <button onclick="DescargarArchivo();" id="guardar" title="Guardar" class="btnp">Guardar</button>
+        <button onclick="agregar();" title="AgregarPestana" id="btn4" class="btnp">Agregar Pestana</button>
+        <button onclick="quitar();" title="QuitarPestana" id="btn5" class="btnp">Quitar Pestana</button>
+        -->
+        <div id="pestanas">
+            <ul id=lista>
+            </ul>
+        </div>
+
+        <div id="contenidopestanas">
+
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Consola JavaScript</h5>
+                <div id="consolaJavaScript">
+                    <textarea id="txtJavaScript" name="txtJavaScript" readonly class="consola" rows="10" cols="45">
+                    </textarea>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h5>Consola Python</h5>
+                <div id="consolaPython">
+                    <textarea id="txtPython" name="txtPython" class="consola" readonly rows="10" cols="45"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+        </div>
+        <div id="grafo" class="row">
+
+        </div>
+    </div>
+</body>
+<footer style="position: fixed; bottom: 0; width: 100%; text-align: center;">&copy; Copyright 2020 Edgar Daniel Cil
+    Peñate</footer>
+
+</html>

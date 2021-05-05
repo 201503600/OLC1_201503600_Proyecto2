@@ -21,7 +21,7 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <title>Translator in Docker</title>
+    <title>Typesty</title>
 </head>
 
 <body>
@@ -32,6 +32,7 @@
                 <option value="" selected>Menu</option>
                 <option value="open">Abrir</option>
                 <option value="new">Nuevo</option>
+                <option value="close">Cerrar</option>
                 <option value="save">Guardar</option>
                 <option value="saveAs">Guardar Como</option>
 
@@ -40,7 +41,7 @@
 
         <div class="dropdown">
             <input id="fileInput" style="display: none;" title="Abrir" type="file" size="50"
-                onchange="AbrirArchivo(this.files)" accept=".java" class="btnp">
+                onchange="AbrirArchivo(this.files)" accept=".ty" class="btnp">
         </div>
 
         <div class="dropdown">

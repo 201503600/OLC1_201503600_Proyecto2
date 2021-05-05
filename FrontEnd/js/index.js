@@ -245,7 +245,7 @@ function saveFile() {
     var MM = hoy.getMinutes();
     var formato = get_vent().replace("textarea", "") + "_" + dd + "_" + mm + "_" + yyyy + "_" + HH + "_" + MM;
 
-    var nombre = "Archivo" + formato + ".java";//nombre del archivo
+    var nombre = "Archivo" + formato + ".ty";//nombre del archivo
     var file = new Blob([contenido], { type: 'text/plain' });
 
     if (window.navigator.msSaveOrOpenBlob) {

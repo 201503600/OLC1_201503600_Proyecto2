@@ -40,11 +40,13 @@ function changeFuncMenu() {
         saveFile();
     } else if (selectedValue == "saveAs") {
         saveFile();
+    } else if (selectedValue == "close"){
+        quitar();
     }
     selectBox.selectedIndex = 0;
 }
 
-function changeFuncDownload() {
+/*function changeFuncDownload() {
     var selectBox = document.getElementById("selectDownload");
     var selectedValue = selectBox.options[selectBox.selectedIndex].value;
     if (selectedValue == "both") {
@@ -55,21 +57,19 @@ function changeFuncDownload() {
         alert(selectedValue);
     }
     selectBox.selectedIndex = 0;
-}
+}*/
 
 function viewReport() {
     var selectBox = document.getElementById("selectReport");
     var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-    if (selectedValue == "tokens") {
-        window.open('tokens.html')
+    if (selectedValue == "simbolos") {
+        //window.open('tokens.html')
     } else if (selectedValue == "errores") {
-        window.open('errores.html')
-    } else if (selectedValue == "grafopy") {
-        var contenedor = document.getElementById("grafo");
-        contenedor.innerHTML = `<h4>Grafo de python</h4><br><img src="images/astPython.png" style="vertical-align:middle;margin:0px 50px">`;
-    } else if (selectedValue == "grafojs") {
-        window.open('javascript.pdf')
-    }
+        //window.open('errores.html')
+    } else if (selectedValue == "ast") {
+        /*var contenedor = document.getElementById("grafo");
+        contenedor.innerHTML = `<h4>Grafo de python</h4><br><img src="images/astPython.png" style="vertical-align:middle;margin:0px 50px">`;*/
+    } 
     selectBox.selectedIndex = 0;
 }
 
@@ -84,9 +84,10 @@ function sendText() {
     }).then(
         response => response.text()
     ).then(
-        (data) => { console.log(data); document.getElementById("txtPython").value = data }
+        (data) => { console.log(data); document.getElementById("txtConsola").value = data }
     ).catch(
-        error => console.error(error)
+        error => {  console.error(error); 
+                    document.getElementById("txtConsola").value = "Error: Seleccione una pestaña"; }
     )
 }
 
@@ -161,7 +162,7 @@ function agregar() {
     ta.setAttribute('name', 'textarea' + x);
     ta.setAttribute('class', 'ta');
     ta.setAttribute('style', 'display:none');
-    ta.cols = 60;
+    ta.cols = 50;
     ta.rows = 30;
     divp.appendChild(ta);
     contenido.appendChild(divp);
@@ -181,6 +182,7 @@ function agregar() {
     return 'pestana' + x;
 }
 
+/*---------------------------------------Funcion Eliminar Pestania----------------------------------------*/
 function quitar() {
     try {
         var lu = document.getElementById("lista");

@@ -8,132 +8,308 @@
 %options case-insensitive
 
 %%
+\s+ { /*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column);*/ }
+
 /* Comentarios */
-"//"(.*)                { console.log('Comentario de una linea reconocido'); }
-(\/\*(\s*|.*?)*\*\/)    { console.log('Comentario multilinea reconocido'); }
+"//"[^\n]*              { console.log('Comentario de una linea reconocido'); --yylloc.first_line;
+                        /*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column);*/}
+"/*"('*'|[^"*/"])*"*/"  { console.log('Comentario multilinea reconocido'); 
+                        /*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column);*/}
 
-/* Palabras reservadas */
+/**************** Operadores Aritmeticos *************/
 
-"void"              return 'RVOID';
-"int"               return 'RINT';
-"double"            return 'RDOUBLE';
-"boolean"           return 'RBOOLEAN';
-"char"              return 'RCHAR';
-"string"            return 'RSTRING';
-"new"               return 'RNEW';
-"if"                return 'RIF';
-"else"              return 'RELSE';
-"print"             return 'RPRINT';
-"switch"            return 'RSWITCH';
-"case"              return 'RCASE';
-"default"           return 'RDEFAULT';
-"break"             return 'RBREAK';
-"continue"          return 'RCONTINUE';
-"return"            return 'RRETURN';
-"while"             return 'RWHILE';
-"for"               return 'RFOR';
-"do"                return 'RDO';
-"tolower"           return 'RTO_LOWER';
-"toupper"           return 'RTO_UPPER';
-"length"            return 'RLENGTH';
-"truncate"          return 'RTRUNCATE';
-"round"             return 'RROUND';
-"typeof"            return 'RTYPE_OF';
-"tostring"          return 'RTO_STRING';
-"tochararray"       return 'RTO_CHAR_ARRAY';
-"exec"              return 'REXEC';
+"++"                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'INCREMENTO';}
+"--"                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'DECREMENTO';}
+"+"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'SUMA';}
+"-"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RESTA';}
+"*"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'MULTIPLICACION';}
+"/"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'DIVISION';}
+"^"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'POTENCIA';}
+"%"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'MODULO';}
 
-/* Cadenas */
-["](.*)["]          { console.log(yytext); return 'SS'; }
+/**************** Operadores Relacionales *************/
 
-/* Operadores aritmeticos */
+"=="                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'COMPARACION';}
+"!="                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'DIFERENTE';}
+"<="                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'MEN_EQ';}
+">="                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'MAY_EQ';}
+">"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'MAYOR';}
+"<"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'MENOR';}
 
-"++"                return 'INCREMENTO';
-"--"                return 'DECREMENTO';
-"+"                 return 'SUMA';
-"-"                 return 'RESTA';
-"*"                 return 'MULTIPLICACION';
-"/"                 return 'DIVISION';
-"^"                 return 'POTENCIA';
-"%"                 return 'MODULO';
+/**************** Operadores Logicos *************/
 
-/* Operadores relacionales */
+"||"                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'OR';}
+"&&"                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'AND';}
+"!"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'NOT';}
 
-"=="                return 'IGUALACION';
-"!="                return 'DIFERENTE';
-"<"                 return 'MENOR';
-"<="                return 'MEN_EQ';
-">"                 return 'MAYOR';
-">="                return 'MAY_EQ';
+/**************** Simbolos *************/
 
-/* Operadores Logicos */
+"="                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'IGUAL';}
+"?"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'TERNARIO';}
+":"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'COLON';}
+"("                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'PAR_IZQ';}
+")"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'PAR_DER';}
+"["                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'COR_IZQ';}
+"]"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'COR_DER';}
+"{"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'LLAVE_IZQ';}
+"}"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'LLAVE_DER';}
+","                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'COMMA';}
+";"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'SEMICOLON';}
+"."                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'DOT';}
 
-"||"                return 'OR';
-"&&"                return 'AND';
-"!"                 return 'NOT';
+/**************** Palabras Reservadas *************/
 
-/* Simbolos */
+"void"              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RVOID';}
+"int"               {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RINT';}
+"double"            {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RDOUBLE';}
+"boolean"           {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RBOOLEAN';}
+"char"              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RCHAR';}
+"string"            {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RSTRING';}
+"new"               {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RNEW';}
+"if"                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RIF';}
+"else"              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RELSE';}
+"print"             {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RPRINT';}
+"switch"            {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RSWITCH';}
+"case"              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RCASE';}
+"default"           {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RDEFAULT';}
+"break"             {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RBREAK';}
+"continue"          {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RCONTINUE';}
+"return"            {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RRETURN';}
+"while"             {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RWHILE';}
+"for"               {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RFOR';}
+"do"                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RDO';}
+"tolower"           {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RTO_LOWER';}
+"toupper"           {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RTO_UPPER';}
+"length"            {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RLENGTH';}
+"truncate"          {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RTRUNCATE';}
+"round"             {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RROUND';}
+"typeof"            {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RTYPE_OF';}
+"tostring"          {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RTO_STRING';}
+"tochararray"       {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RTO_CHAR_ARRAY';}
+"exec"              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'REXEC';}
+"list"              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RLIST';}
 
-"?"                 return 'TERNARIO';
-":"                 return 'COLON';
-","                 return 'COMMA';
-"."                 return 'DOT';
-";"                 return 'SEMICOLON';
-"="                 return 'IGUAL';
-"("                 return 'PAR_IZQ';
-")"                 return 'PAR_DER';
-"{"                 return 'LLAVE_IZQ';
-"}"                 return 'LLAVE_DER';
-"["                 return 'COR_IZQ';
-"]"                 return 'COR_DER';
+/**************** Expresiones Regulares *************/
+[0-9]+"."[0-9]+   {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'DECIMAL';}
+[0-9]+              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'ENTERO';}
+[\'\‘\’].[\'\’\‘]                           {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'CARACTER';}
+"true"              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RTRUE';}
+"false"             {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RFALSE';}
+[\"\“\”](([^\"\“\”\\])*([\\].)*)*[\"\“\”]          {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'CADENA'; }
+[A-Za-z]([A-Za-z]|[0-9]|"_")* {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'IDENTIFICADOR';}
 
-/* Espacios en blanco */
-[ \r\t]+                {}
-\n                      {}
-
-[A-Za-z]([A-Za-z]|[0-9]|"_")* return 'IDENTIFICADOR';
-[0-9]+("."[0-9]+)   return 'DECIMAL';
-[0-9]+              return 'ENTERO';
-
-<<EOF>>                 {};
+<<EOF>>                 return 'EOF';
 
 .                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
 /lex
 
 /* Asociación de operadores y precedencia */
 
-%left 'MAS' 'MENOS'
-%left 'POR' 'DIVIDIDO'
-%left UMENOS
+%left 'OR' 'AND'
+%right 'NOT' 
+%left 'COMPARACION' 'DIFERENTE' 'MENOR' 'MEN_EQ' 'MAYOR' 'MAY_EQ'
+%left 'SUMA' 'RESTA'
+%left 'MULTIPLICACION' 'DIVISION' 'MODULO'
+%left 'POTENCIA'
+%right 'INCREMENTO' 'DECREMENTO' casteo
+%right UMENOS
+
 
 %start ini
 
 %% /* Definición de la gramática */
 
 ini
-	: instrucciones EOF
-    | SS
+    : sentencias EOF
+    | EOF
 ;
 
-instrucciones
-	: instruccion instrucciones
-	| instruccion
-	| error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+sentencias
+	: sentencias sentencia
+	| sentencia
 ;
 
-instruccion
-	: REVALUAR CORIZQ expresion CORDER PTCOMA {
-		console.log('El valor de la expresión es: ' + $3);
-	}
+sentencia
+    : metodo
+    | sent_exec SEMICOLON
+    | sentencia_local
+;
+
+sentencia_local
+    : inicializacion SEMICOLON
+    | unitarios SEMICOLON
+    | llamada SEMICOLON
+    | sent_if
+    | sent_switch
+    | sent_while
+    | sent_for
+    | sent_dowhile
+    | sent_print SEMICOLON
+    | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+;
+
+inicializacion
+    : declaracion
+    | asignacion
+;
+
+declaracion 
+    : tipo IDENTIFICADOR { console.log($1); }
+    | tipo IDENTIFICADOR IGUAL expresion { console.log($1); }
+;
+
+tipo
+    : RINT
+    | RDOUBLE
+    | RCHAR
+    | RBOOLEAN
+    | RSTRING
+;
+
+asignacion 
+    : IDENTIFICADOR IGUAL expresion 
 ;
 
 expresion
-	: MENOS expresion %prec UMENOS  { $$ = $2 *-1; }
-	| expresion MAS expresion       { $$ = $1 + $3; }
-	| expresion MENOS expresion     { $$ = $1 - $3; }
-	| expresion POR expresion       { $$ = $1 * $3; }
-	| expresion DIVIDIDO expresion  { $$ = $1 / $3; }
-	| ENTERO                        { $$ = Number($1); }
-	| DECIMAL                       { $$ = Number($1); }
-	| PARIZQ expresion PARDER       { $$ = $2; }
+    : expresion OR expresion
+    | expresion AND expresion 
+    | NOT expresion 
+    | expresion COMPARACION expresion
+    | expresion DIFERENTE expresion
+    | expresion MENOR expresion
+    | expresion MEN_EQ expresion
+    | expresion MAYOR expresion
+    | expresion MAY_EQ expresion
+    | expresion SUMA expresion
+    | expresion RESTA expresion
+    | expresion MULTIPLICACION expresion
+    | expresion DIVISION expresion
+    | expresion MODULO expresion
+    | expresion POTENCIA expresion
+    | RESTA expresion %prec UMENOS               
+    | PAR_IZQ expresion PAR_DER
+    | casteo expresion
+    | unitarios
+    | llamada
+    | sent_nativas
+    | ENTERO
+    | DECIMAL
+    | CADENA
+    | CARACTER
+    | IDENTIFICADOR
+    | RTRUE
+    | RFALSE
+;
+
+unitarios
+    : expresion INCREMENTO
+    | expresion DECREMENTO
+;
+
+casteo
+    : PAR_IZQ tipo PAR_DER 
+;
+
+sent_if
+    : list_if RELSE bloque_instrucciones
+    | list_if
+;
+
+list_if 
+    : list_if RELSE RIF PAR_IZQ expresion PAR_DER bloque_instrucciones
+    | RIF PAR_IZQ expresion PAR_DER bloque_instrucciones
+;
+
+bloque_instrucciones
+    : LLAVE_IZQ instrucciones LLAVE_DER
+    | LLAVE_IZQ LLAVE_DER
+;
+
+sent_switch
+    : RSWITCH PAR_IZQ expresion PAR_DER LLAVE_IZQ cases_list default LLAVE_DER
+    | RSWITCH PAR_IZQ expresion PAR_DER LLAVE_IZQ cases_list LLAVE_DER
+    | RSWITCH PAR_IZQ expresion PAR_DER LLAVE_IZQ default LLAVE_DER
+;
+
+cases_list
+    : cases_list RCASE expresion COLON instrucciones
+    | RCASE expresion COLON instrucciones
+;
+
+default
+    : RDEFAULT COLON instrucciones
+;
+
+instrucciones
+    : instrucciones instruccion
+    | instruccion
+;
+
+instruccion 
+    : RBREAK SEMICOLON
+    | RCONTINUE SEMICOLON
+    | RRETURN SEMICOLON
+    | RRETURN expresion SEMICOLON
+    | sentencia_local
+;
+
+sent_while
+    : RWHILE PAR_IZQ expresion PAR_DER bloque_instrucciones
+;
+
+sent_for
+    : RFOR PAR_IZQ inicializacion SEMICOLON expresion SEMICOLON expresion PAR_DER bloque_instrucciones
+;
+
+sent_dowhile
+    : RDO bloque_instrucciones RWHILE PAR_IZQ expresion PAR_DER SEMICOLON
+;
+
+metodo
+    : RVOID IDENTIFICADOR PAR_IZQ parametros PAR_DER bloque_instrucciones
+    | RVOID IDENTIFICADOR PAR_IZQ PAR_DER bloque_instrucciones
+;
+
+parametros
+    : parametros COMMA tipo IDENTIFICADOR
+    | tipo IDENTIFICADOR
+;
+
+llamada
+    : IDENTIFICADOR PAR_IZQ params_llamada PAR_DER
+    | IDENTIFICADOR PAR_IZQ PAR_DER
+;
+
+params_llamada
+    : params_llamada COMMA expresion
+    | expresion
+;
+
+sent_print
+    : RPRINT PAR_IZQ expresion PAR_DER 
+;
+
+sent_nativas
+    : funcion PAR_IZQ expresion PAR_DER
+;
+
+funcion 
+    : RTO_LOWER 
+    | RTO_UPPER 
+    | RLENGTH
+    | RTRUNCATE 
+    | RROUND 
+    | RTYPE_OF 
+    | RTO_STRING
+    | RTO_CHAR_ARRAY
+;
+
+sent_exec
+    : REXEC IDENTIFICADOR PAR_IZQ PAR_DER
+    | REXEC IDENTIFICADOR PAR_IZQ list_val PAR_DER
+;
+
+list_val
+    : list_val COMMA expresion
+    | expresion
 ;

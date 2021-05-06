@@ -1,2 +1,84 @@
+int nUm;
+int var1;
+int var11 = 5;
+double var2;
+boolean var3;
+boolean var4 = false;
+string var6 = "Nice";
+/* COMENTARIO MULTILINEA */
+switch(4==3){
+    case 7:
+        break;
+}
+for ( int i=0; i<3;i++ ){
 
-"Este es\nmi primer cadena"
+if (4){
+    double var2;
+}else if (35){
+    double var2;
+}
+
+while (x<100){ 
+    if (x > 50) { 
+        //Más sentencias 
+    } else { 
+        //Más sentencias 
+    } 
+    X++; 
+    //Más sentencias 
+}
+    X++; 
+    //más sentencias 
+}
+
+Int a=5; 
+Do{ 
+    If (a>=1 && a <3){ 
+
+    } Else{
+        
+    } 
+    a--; 
+    return a;
+} while (a>0);
+
+void holamundo(){
+Do{ 
+    If (a>=1 && a <3){ 
+
+    } Else{
+        
+    } 
+    a--; 
+    return a;
+} while (a>0);
+}
+
+holamundo();
+Int num = suma(6,5); // a = 11
+
+void funcion1(){ 
+    print(“hola”); 
+}
+exec funcion1(); 
+/*
+        RESULTADO hola 
+*/ 
+
+//Ejemplo 2 
+
+void funcion2(string mensaje){ 
+    print(mensaje); 
+} 
+exec funcion2(“hola soy un mensaje”); 
+
+/*RESULTADO Hola soy un mensaje */
+
+string cad_1 = toLower(“hOla MunDo”);
+string cad_1 = toUpper(“hOla MunDo”);
+int tam_vector = length(vector2);
+int nuevoValor = truncate(3.53);
+Double valor = round(5.8);
+String tipo = typeof(15);
+String valor = toString(14);
+

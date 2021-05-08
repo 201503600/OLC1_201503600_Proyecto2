@@ -200,7 +200,7 @@ expresion
     | expresion MAYOR expresion
     | expresion MAY_EQ expresion
     | expresion SUMA expresion { $$ = new operador(operacion.SUMA,$1,$3,this._$.first_line, this._$.first_column); }
-    | expresion RESTA expresion
+    | expresion RESTA expresion { $$ = new operador(operacion.RESTA,$1,$3,this._$.first_line, this._$.first_column); }
     | expresion MULTIPLICACION expresion
     | expresion DIVISION expresion
     | expresion MODULO expresion

@@ -84,7 +84,7 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
- console.log($$[$0-1]); return $$[$0-1]; 
+ return $$[$0-1]; 
 break;
 case 2:
  return []; 
@@ -98,7 +98,7 @@ break;
 case 5: case 7:
  this.$ = $$[$0]; 
 break;
-case 6:
+case 6: case 17:
  this.$ = $$[$0-1]; 
 break;
 case 8:
@@ -106,9 +106,6 @@ case 8:
         console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
         errores.agregarError('sintáctico', 'Token inesperado \'' + yytext + '\'', this._$.first_line, this._$.first_column);
     
-break;
-case 17:
- console.log($$[$0-1]); this.$ = $$[$0-1]; 
 break;
 case 20:
  console.log($$[$0-1]); 
@@ -124,6 +121,9 @@ case 38:
 break;
 case 39:
  this.$ = new operador(operacion.MULTIPLICACION,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
+break;
+case 40:
+ this.$ = new operador(operacion.DIVISION,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
 break;
 case 49:
  this.$ = new primitivo(tipo.INT, $$[$0]);
@@ -144,7 +144,7 @@ case 54: case 55:
  this.$ = new primitivo(tipo.BOOLEAN, $$[$0]); 
 break;
 case 89:
- console.log($$[$0-1]); this.$ = new print($$[$0-1]); 
+ this.$ = new print($$[$0-1]); 
 break;
 case 91: case 92: case 93: case 94: case 95: case 96: case 97: case 98: case 99: case 100:
 

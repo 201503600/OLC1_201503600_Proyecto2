@@ -48,7 +48,7 @@ app.post('/', function(req, res){
         //console.log(errores.getError(i));
         output.agregarTexto('--->' + errores.getError(i).getMensaje() + '\n');
     }
-    console.log(JSON.stringify(raiz));
+    //console.log(JSON.stringify(raiz));
     for(let i = 0; i<raiz.length; i++){
         if (raiz[i] instanceof instruccion){
             raiz[i].ejecutar();

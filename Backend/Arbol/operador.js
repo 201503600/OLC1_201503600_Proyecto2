@@ -374,8 +374,146 @@ class operador{
                                 + ' en la linea ' + this.linea + ' y columna ' + this.columna);
                 }
             case operacion.DIVISION:
-
-                break;
+                this.tipo = this.tipoDominanteDiv(this.izq.getTipo(), this.der.getTipo());
+                switch(this.izq.getTipo()){
+                    case tipo.INT:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());
+                                if (opDer != 0){ 
+                                    resultado = opIzq / opDer;
+                                    return resultado;
+                                }
+                                errores.agregarError('semantico', 
+                                                        'El denominador debe ser diferente de 0', 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: El denominador debe ser diferente de 0 en la linea ' 
+                                        + this.linea + ' y columna ' + this.columna);
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor()); 
+                                if (opDer != 0){ 
+                                    resultado = opIzq / opDer;
+                                    return resultado;
+                                }
+                                errores.agregarError('semantico', 
+                                                        'El denominador debe ser diferente de 0', 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: El denominador debe ser diferente de 0 en la linea ' 
+                                        + this.linea + ' y columna ' + this.columna);
+                            case tipo.CHAR:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                if (opDer != 0){ 
+                                    resultado = opIzq / opDer;
+                                    return resultado;
+                                }
+                                errores.agregarError('semantico', 
+                                                        'El denominador debe ser diferente de 0', 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: El denominador debe ser diferente de 0 en la linea ' 
+                                        + this.linea + ' y columna ' + this.columna);
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede dividir entero con ' 
+                                                        + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede dividir entero con ' 
+                                        + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.DOUBLE:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor()); 
+                                if (opDer != 0){ 
+                                    resultado = opIzq / opDer;
+                                    return resultado;
+                                }
+                                errores.agregarError('semantico', 
+                                                        'El denominador debe ser diferente de 0', 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: El denominador debe ser diferente de 0 en la linea ' 
+                                        + this.linea + ' y columna ' + this.columna);
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor()); 
+                                if (opDer != 0){ 
+                                    resultado = opIzq / opDer;
+                                    return resultado;
+                                }
+                                errores.agregarError('semantico', 
+                                                        'El denominador debe ser diferente de 0', 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: El denominador debe ser diferente de 0 en la linea ' 
+                                        + this.linea + ' y columna ' + this.columna);
+                            case tipo.CHAR:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0)); 
+                                if (opDer != 0){ 
+                                    resultado = opIzq / opDer;
+                                    return resultado;
+                                }
+                                errores.agregarError('semantico', 
+                                                        'El denominador debe ser diferente de 0', 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: El denominador debe ser diferente de 0 en la linea ' 
+                                        + this.linea + ' y columna ' + this.columna);
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede dividir doble con ' 
+                                                        + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede dividir doble con ' 
+                                        + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.CHAR:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseFloat(this.izq.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseFloat(this.der.getValor());
+                                if (opDer != 0){ 
+                                    resultado = opIzq / opDer;
+                                    return resultado;
+                                }
+                                errores.agregarError('semantico', 
+                                                        'El denominador debe ser diferente de 0', 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: El denominador debe ser diferente de 0 en la linea ' 
+                                        + this.linea + ' y columna ' + this.columna);
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseFloat(this.der.getValor());
+                                if (opDer != 0){ 
+                                    resultado = opIzq / opDer;
+                                    return resultado;
+                                }
+                                errores.agregarError('semantico', 
+                                                        'El denominador debe ser diferente de 0', 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: El denominador debe ser diferente de 0 en la linea ' 
+                                        + this.linea + ' y columna ' + this.columna);
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede dividir caracter con ' 
+                                                        + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede dividir caracter con ' 
+                                        + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    default:
+                        errores.agregarError('semantico', 
+                                                'No se puede dividir ' + this.getStringTipo(this.izq.getTipo()) 
+                                                + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                this.linea, this.columna);
+                        return ('Error semantico: No se puede dividir ' + this.getStringTipo(this.izq.getTipo()) 
+                                + ' con ' + this.getStringTipo(this.der.getTipo())
+                                + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                }
             case operacion.POTENCIA:
 
                 break;
@@ -449,6 +587,15 @@ class operador{
         } else if (ex1 == tipo.INT || ex2 == tipo.INT) {
             return tipo.INT;
         } 
+        return null;
+    }
+
+    tipoDominanteDiv(ex1, ex2) {
+        if (ex1 == tipo.DOUBLE || ex2 == tipo.DOUBLE){
+            return tipo.DOUBLE;
+        } else if (ex1 == tipo.INT || ex2 == tipo.INT){
+            return tipo.DOUBLE;
+        }
         return null;
     }
 }

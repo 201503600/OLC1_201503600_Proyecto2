@@ -135,7 +135,7 @@
 %% /* Definición de la gramática */
 
 ini
-    : sentencias EOF { console.log($1); return $1; }
+    : sentencias EOF { return $1; }
     | EOF            { return []; }
 ;
 
@@ -164,7 +164,7 @@ sentencia_local
     | sent_while
     | sent_for
     | sent_dowhile
-    | sent_print SEMICOLON { console.log($1); $$ = $1; }
+    | sent_print SEMICOLON { $$ = $1; }
 ;
 
 inicializacion
@@ -202,7 +202,7 @@ expresion
     | expresion SUMA expresion              { $$ = new operador(operacion.SUMA,$1,$3,this._$.first_line, this._$.first_column); }
     | expresion RESTA expresion             { $$ = new operador(operacion.RESTA,$1,$3,this._$.first_line, this._$.first_column); }
     | expresion MULTIPLICACION expresion    { $$ = new operador(operacion.MULTIPLICACION,$1,$3,this._$.first_line, this._$.first_column); }
-    | expresion DIVISION expresion
+    | expresion DIVISION expresion          { $$ = new operador(operacion.DIVISION,$1,$3,this._$.first_line, this._$.first_column); }
     | expresion MODULO expresion
     | expresion POTENCIA expresion
     | RESTA expresion %prec UMENOS               
@@ -305,7 +305,7 @@ params_llamada
 ;
 
 sent_print
-    : RPRINT PAR_IZQ expresion PAR_DER { console.log($3); $$ = new print($3); }
+    : RPRINT PAR_IZQ expresion PAR_DER { $$ = new print($3); }
 ;
 
 sent_nativas

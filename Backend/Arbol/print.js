@@ -8,8 +8,7 @@ class print extends instruccion{
     }
 
     ejecutar(){
-        
-        let resultado = this.expresion.getValor();
+        let resultado = this.expresion.getValor().toString().replace(/\"/g,"");
         output.agregarTexto('> ' + resultado + '\n');
     }
 }

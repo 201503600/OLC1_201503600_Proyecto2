@@ -89,16 +89,16 @@ break;
 case 2:
  return []; 
 break;
-case 3:
+case 3: case 71:
  $$[$0-1].push($$[$0]); this.$ = $$[$0-1]; 
 break;
-case 4:
+case 4: case 72:
  this.$ = [$$[$0]]; 
 break;
-case 5: case 7:
+case 5: case 7: case 12: case 60: case 77:
  this.$ = $$[$0]; 
 break;
-case 6: case 17: case 44:
+case 6: case 17: case 44: case 63:
  this.$ = $$[$0-1]; 
 break;
 case 8:
@@ -106,6 +106,9 @@ case 8:
         console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
         errores.agregarError('sintáctico', 'Token inesperado \'' + yytext + '\'', this._$.first_line, this._$.first_column);
     
+break;
+case 13: case 14: case 15: case 16: case 53: case 73: case 74: case 75: case 76:
+  
 break;
 case 20:
  console.log($$[$0-1]); 
@@ -173,11 +176,20 @@ break;
 case 52:
  this.$ = new primitivo(tipo.CHAR, $$[$0]); 
 break;
-case 53:
-  
-break;
 case 54: case 55:
  this.$ = new primitivo(tipo.BOOLEAN, $$[$0]); 
+break;
+case 59:
+ $$[$0-2].agregarElse($$[$0]); 
+break;
+case 61:
+ $$[$0-6].agregarElseIf($$[$0-2],$$[$0],_$[$0-2].first_line, _$[$0-2].first_column); this.$ = $$[$0-6]; 
+break;
+case 62:
+ this.$ = new _if([$$[$0-2]],[$$[$0]],this._$.first_line, this._$.first_column); 
+break;
+case 64:
+ this.$ = []; 
 break;
 case 89:
  this.$ = new print($$[$0-1]); 

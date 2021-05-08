@@ -159,12 +159,12 @@ sentencia_local
     : inicializacion SEMICOLON
     | unitarios SEMICOLON
     | llamada SEMICOLON
-    | sent_if
-    | sent_switch
-    | sent_while
-    | sent_for
-    | sent_dowhile
-    | sent_print SEMICOLON { $$ = $1; }
+    | sent_if                       { $$ = $1; }
+    | sent_switch                   {  }
+    | sent_while                    {  }
+    | sent_for                      {  }
+    | sent_dowhile                  {  }
+    | sent_print SEMICOLON          { $$ = $1; }
 ;
 
 inicializacion
@@ -229,19 +229,25 @@ casteo
     : PAR_IZQ tipo PAR_DER 
 ;
 
+/*sent_if
+    : RIF PAR_IZQ expresion PAR_DER bloque_instrucciones
+    | RIF PAR_IZQ expresion PAR_DER bloque_instrucciones RELSE bloque_instrucciones
+    | RIF PAR_IZQ expresion PAR_DER bloque_instrucciones RELSE sent_if
+;*/
+
 sent_if
-    : list_if RELSE bloque_instrucciones
-    | list_if
+    : list_if RELSE bloque_instrucciones    { $1.agregarElse($3); }
+    | list_if                               { $$ = $1; }
 ;
 
 list_if 
-    : list_if RELSE RIF PAR_IZQ expresion PAR_DER bloque_instrucciones
-    | RIF PAR_IZQ expresion PAR_DER bloque_instrucciones
+    : list_if RELSE RIF PAR_IZQ expresion PAR_DER bloque_instrucciones  { $1.agregarElseIf($5,$7,@5.first_line, @5.first_column); $$ = $1; }
+    | RIF PAR_IZQ expresion PAR_DER bloque_instrucciones                { $$ = new _if([$3],[$5],this._$.first_line, this._$.first_column); }             
 ;
 
 bloque_instrucciones
-    : LLAVE_IZQ instrucciones LLAVE_DER
-    | LLAVE_IZQ LLAVE_DER
+    : LLAVE_IZQ instrucciones LLAVE_DER     { $$ = $2; }
+    | LLAVE_IZQ LLAVE_DER                   { $$ = []; }
 ;
 
 sent_switch
@@ -260,16 +266,16 @@ default
 ;
 
 instrucciones
-    : instrucciones instruccion
-    | instruccion
+    : instrucciones instruccion     { $1.push($2); $$ = $1; }
+    | instruccion                   { $$ = [$1]; }
 ;
 
 instruccion 
-    : RBREAK SEMICOLON
-    | RCONTINUE SEMICOLON
-    | RRETURN SEMICOLON
-    | RRETURN expresion SEMICOLON
-    | sentencia_local
+    : RBREAK SEMICOLON              {  }
+    | RCONTINUE SEMICOLON           {  }
+    | RRETURN SEMICOLON             {  }
+    | RRETURN expresion SEMICOLON   {  }
+    | sentencia_local               { $$ = $1; }
 ;
 
 sent_while

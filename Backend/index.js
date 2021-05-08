@@ -43,16 +43,16 @@ app.post('/', function(req, res){
     let raiz = null;
     raiz = parser.parse(texto);
     //console.log(errores);
-        
-    for(let i = 0; i<errores.getSize(); i++){
-        //console.log(errores.getError(i));
-        output.agregarTexto('--->' + errores.getError(i).getMensaje() + '\n');
-    }
+    
     //console.log(JSON.stringify(raiz));
     for(let i = 0; i<raiz.length; i++){
         if (raiz[i] instanceof instruccion){
             raiz[i].ejecutar();
         }
+    }  
+    for(let i = 0; i<errores.getSize(); i++){
+        //console.log(errores.getError(i));
+        output.agregarTexto('--->' + errores.getError(i).getMensaje() + '\n');
     }
     output.agregarTexto('Ejecutado correctamente!\n');
     res.send(output.getSalida());

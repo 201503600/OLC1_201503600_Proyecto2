@@ -2,6 +2,20 @@
  * Segundo Proyecto OLC1 - Edgar Cil - 201503600
  */
 
+/*------------------------------------------------IMPORTACIONES----------------------------------------------*/
+%{
+    //const Nodo = require("./AST/nodo_arbol");
+    //var raiz;
+
+    const errores = require('./Arbol/Error/listaError');
+    const print = require('./Arbol/print');
+    const _if = require('./Arbol/if');
+    const operacion = require('./Arbol/operaciones');
+    const operador = require('./Arbol/operador');
+    const tipo = require('./Arbol/tipos');
+    const primitivo = require('./Arbol/primitivo');
+    
+%}
 /* Definición Léxica */
 %lex
 
@@ -100,7 +114,8 @@
 
 <<EOF>>                 return 'EOF';
 
-.                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
+.                       { /*console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); */
+                            errores.agregarError('lexico', 'Simbolo \'' + yytext + '\' no reconocido', yylloc.first_line, yylloc.first_column); }
 /lex
 
 /* Asociación de operadores y precedencia */
@@ -120,19 +135,24 @@
 %% /* Definición de la gramática */
 
 ini
-    : sentencias EOF
-    | EOF
+    : sentencias EOF { console.log($1); return $1; }
+    | EOF            { return []; }
 ;
 
 sentencias
-	: sentencias sentencia
-	| sentencia
+	: sentencias sentencia  { $1.push($2); $$ = $1; }
+	| sentencia             { $$ = [$1]; }
 ;
 
 sentencia
-    : metodo
-    | sent_exec SEMICOLON
-    | sentencia_local
+    : metodo              { $$ = $1; }
+    | sent_exec SEMICOLON { $$ = $1; }
+    | sentencia_local     { $$ = $1; }
+    | error SEMICOLON
+    { 
+        console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+        errores.agregarError('sintáctico', 'Token inesperado \'' + yytext + '\'', this._$.first_line, this._$.first_column);
+    }
 ;
 
 sentencia_local
@@ -144,8 +164,7 @@ sentencia_local
     | sent_while
     | sent_for
     | sent_dowhile
-    | sent_print SEMICOLON
-    | error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+    | sent_print SEMICOLON { console.log($1); $$ = $1; }
 ;
 
 inicializacion
@@ -180,7 +199,7 @@ expresion
     | expresion MEN_EQ expresion
     | expresion MAYOR expresion
     | expresion MAY_EQ expresion
-    | expresion SUMA expresion
+    | expresion SUMA expresion { $$ = new operador(operacion.SUMA,$1,$3,this._$.first_line, this._$.first_column); }
     | expresion RESTA expresion
     | expresion MULTIPLICACION expresion
     | expresion DIVISION expresion
@@ -192,13 +211,13 @@ expresion
     | unitarios
     | llamada
     | sent_nativas
-    | ENTERO
-    | DECIMAL
-    | CADENA
-    | CARACTER
-    | IDENTIFICADOR
-    | RTRUE
-    | RFALSE
+    | ENTERO            { $$ = new primitivo(tipo.INT, $1);}
+    | DECIMAL           { $$ = new primitivo(tipo.DOUBLE, $1); }
+    | CADENA            { $$ = new primitivo(tipo.STRING, $1); }
+    | CARACTER          { $$ = new primitivo(tipo.CHAR, $1); }
+    | IDENTIFICADOR     {  }
+    | RTRUE             { $$ = new primitivo(tipo.BOOLEAN, $1); }
+    | RFALSE            { $$ = new primitivo(tipo.BOOLEAN, $1); }
 ;
 
 unitarios
@@ -286,7 +305,7 @@ params_llamada
 ;
 
 sent_print
-    : RPRINT PAR_IZQ expresion PAR_DER 
+    : RPRINT PAR_IZQ expresion PAR_DER { console.log($3); $$ = new print($3); }
 ;
 
 sent_nativas
@@ -295,21 +314,66 @@ sent_nativas
 
 funcion 
     : RTO_LOWER 
+    {
+
+    }
     | RTO_UPPER 
+    {
+
+    }
     | RLENGTH
+    {
+
+    }
     | RTRUNCATE 
+    {
+
+    }
     | RROUND 
+    {
+
+    }
     | RTYPE_OF 
+    {
+
+    }
     | RTO_STRING
+    {
+
+    }
     | RTO_CHAR_ARRAY
+    {
+
+    }
 ;
 
 sent_exec
     : REXEC IDENTIFICADOR PAR_IZQ PAR_DER
+    {
+
+    }
     | REXEC IDENTIFICADOR PAR_IZQ list_val PAR_DER
+    {
+
+    }
 ;
 
 list_val
-    : list_val COMMA expresion
-    | expresion
+    : list_val COMMA expresion 
+    {
+        /*** GRAFICA **
+        raiz = new Nodo("List_val","");
+        raiz.agregarHijo($1);
+        raiz.agregarHijo(new Nodo(",", "coma"));
+        raiz.agregarHijo($3);
+            */
+        
+    }
+    | expresion 
+    {
+        /*var aux = new Nodo("List_val","");
+        raiz.agregarHijo($1);*/
+
+
+    }
 ;

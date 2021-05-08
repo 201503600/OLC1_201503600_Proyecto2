@@ -4,7 +4,7 @@
   "description": "Backend Proyecto 2",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "author": "Daniel Cil",
   "license": "ISC",
@@ -12,6 +12,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jison": "^0.4.18",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.7"
   }
 }

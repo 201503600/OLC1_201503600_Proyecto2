@@ -77,14 +77,26 @@ function sendText() {
     //console.log(document.getElementById(get_vent()).value);
     //window.locationf="localhost:8000/?key=" + get_vent();
     const formdata = new FormData()
-    formdata.append("message", document.getElementById(get_vent()).value);
-    fetch("../python", {
-        method: "POST",
-        body: formdata,
-    }).then(
+    console.log(document.getElementById(get_vent()).value);
+    formdata.append("entrada", document.getElementById(get_vent()).value);
+    let config = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, GET',
+            'Access-Control-Request-Method': '*',
+            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+        },
+        body: JSON.stringify({
+            entrada: document.getElementById(get_vent()).value
+        })
+      }
+    fetch("http://localhost:3000", config).then(
         response => response.text()
     ).then(
-        (data) => { console.log(data); document.getElementById("txtConsola").value = data }
+        (data) => { document.getElementById("txtConsola").value += data + '\n' }
     ).catch(
         error => {  console.error(error); 
                     document.getElementById("txtConsola").value = "Error: Seleccione una pestaña"; }

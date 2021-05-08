@@ -204,7 +204,7 @@ expresion
     | expresion MULTIPLICACION expresion    { $$ = new operador(operacion.MULTIPLICACION,$1,$3,this._$.first_line, this._$.first_column); }
     | expresion DIVISION expresion          { $$ = new operador(operacion.DIVISION,$1,$3,this._$.first_line, this._$.first_column); }
     | expresion MODULO expresion
-    | expresion POTENCIA expresion
+    | expresion POTENCIA expresion          { $$ = new operador(operacion.POTENCIA,$1,$3,this._$.first_line, this._$.first_column); }
     | RESTA expresion %prec UMENOS               
     | PAR_IZQ expresion PAR_DER
     | casteo expresion

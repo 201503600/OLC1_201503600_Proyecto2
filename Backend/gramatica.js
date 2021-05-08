@@ -125,6 +125,9 @@ break;
 case 40:
  this.$ = new operador(operacion.DIVISION,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
 break;
+case 42:
+ this.$ = new operador(operacion.POTENCIA,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
+break;
 case 49:
  this.$ = new primitivo(tipo.INT, $$[$0]);
 break;

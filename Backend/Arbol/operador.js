@@ -515,8 +515,59 @@ class operador{
                                 + ' en la linea ' + this.linea + ' y columna ' + this.columna);
                 }
             case operacion.POTENCIA:
-
-                break;
+                this.tipo = this.tipoDominantePow(this.izq.getTipo(), this.der.getTipo());
+                switch(this.izq.getTipo()){
+                    case tipo.INT:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = parseInt(this.der.getValor()); 
+                                resultado = Math.pow(opIzq,opDer);
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());  
+                                resultado = Math.pow(opIzq,opDer);
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede potenciar entero con ' 
+                                                        + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede potenciar entero con ' 
+                                        + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.DOUBLE:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor()); 
+                                resultado = Math.pow(opIzq,opDer);
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());  
+                                resultado = Math.pow(opIzq,opDer);
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede potenciar doble con ' 
+                                                        + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede potenciar doble con ' 
+                                        + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    default:
+                        errores.agregarError('semantico', 
+                                                'No se puede potenciar ' + this.getStringTipo(this.izq.getTipo()) 
+                                                + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                this.linea, this.columna);
+                        return ('Error semantico: No se puede potenciar ' + this.getStringTipo(this.izq.getTipo()) 
+                                + ' con ' + this.getStringTipo(this.der.getTipo())
+                                + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                }
             case operacion.MODULO:
 
                 break;
@@ -595,6 +646,15 @@ class operador{
             return tipo.DOUBLE;
         } else if (ex1 == tipo.INT || ex2 == tipo.INT){
             return tipo.DOUBLE;
+        }
+        return null;
+    }
+
+    tipoDominantePow(ex1, ex2) {
+        if (ex1 == tipo.DOUBLE || ex2 == tipo.DOUBLE){
+            return tipo.DOUBLE;
+        } else if (ex1 == tipo.INT && ex2 == tipo.INT){
+            return tipo.INT;
         }
         return null;
     }

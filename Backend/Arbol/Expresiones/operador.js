@@ -1,7 +1,7 @@
 const expresion = require( './expresion');
 const operacion = require('./operaciones');
 const tipo = require('./tipos');
-const errores = require('./Error/listaError');
+const errores = require('../Error/listaError');
 
 class operador{
     constructor(tipoOperacion, izq, der, linea, columna){

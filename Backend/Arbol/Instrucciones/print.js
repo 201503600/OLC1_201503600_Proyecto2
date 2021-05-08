@@ -1,5 +1,5 @@
 const instruccion = require('./instruccion');
-const output = require('./Salida/output');
+const output = require('../Salida/output');
 
 class print extends instruccion{
     constructor(valor){

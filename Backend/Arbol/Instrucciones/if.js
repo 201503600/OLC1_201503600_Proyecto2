@@ -1,7 +1,7 @@
 const instruccion = require('./instruccion');
-const expresion = require('./expresion');
-const tipo = require('./tipos');
-const errores = require('./Error/listaError');
+const expresion = require('../Expresiones/expresion');
+const tipo = require('../Expresiones/tipos');
+const errores = require('../Error/listaError');
 
 class _if extends instruccion{
     /*constructor(listaCondicion, listaSentenciasV, listaSentenciasF){

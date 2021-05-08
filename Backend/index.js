@@ -3,8 +3,8 @@ var parser = require('./gramatica');
 var arbol = require('./AST/recorrido_arbol');
 const errores = require('./Arbol/Error/listaError');
 const output = require('./Arbol/Salida/output');
-const instruccion = require('./Arbol/instruccion');
-const expresion = require('./Arbol/expresion');
+const instruccion = require('./Arbol/Instrucciones/instruccion');
+const expresion = require('./Arbol/Expresiones/expresion');
 
 const express = require('express');
 const cors = require('cors');

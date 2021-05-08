@@ -242,3 +242,35 @@ print("hola " ^ 60.5);
 print("hola " ^ false);
 print("hola " ^ 'a');
 print("hola " ^ "mundo!");
+
+/******* MODULO *******/
+/* ENTEROS CON OTROS TIPOS */
+print(4%4);
+print(4%4.5);
+print(4%true);
+print(5%'g');
+print(61%" aun sale compi!");
+/* DOBLE CON OTROS TIPOS */
+print(1.2%1);
+print(12.25%12.25);
+print(12.3%false);
+print(5.4%'g');
+print(58.5%" no sale compi!");
+/* BOOLEANO CON OTROS TIPOS */
+print(true % 12);
+print(false % 12.25);
+print(true % false);
+print(false % 'g');
+print(true % " aun falta mucho :(");
+/* CARACTER CON OTROS TIPOS */
+print('d' % 8);
+print('d' % 12.25);
+print('d' % true);
+print('s' % 'i');
+print('n' % "o sale :(");
+/* CADENA CON OTROS TIPOS */
+print("hola " % 201503600);
+print("hola " % 60.5);
+print("hola " % false);
+print("hola " % 'a');
+print("hola " % "mundo!");

@@ -569,8 +569,59 @@ class operador{
                                 + ' en la linea ' + this.linea + ' y columna ' + this.columna);
                 }
             case operacion.MODULO:
-
-                break;
+                this.tipo = this.tipoDominanteDiv(this.izq.getTipo(), this.der.getTipo());
+                switch(this.izq.getTipo()){
+                    case tipo.INT:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor()); 
+                                resultado = opIzq % opDer;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor()); 
+                                resultado = opIzq % opDer;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede modular entero con ' 
+                                                        + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede modular entero con ' 
+                                        + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.DOUBLE:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor()); 
+                                resultado = opIzq % opDer;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = opIzq % opDer;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede modular doble con ' 
+                                                        + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede modular doble con ' 
+                                        + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    default:
+                        errores.agregarError('semantico', 
+                                                'No se puede modular ' + this.getStringTipo(this.izq.getTipo()) 
+                                                + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                this.linea, this.columna);
+                        return ('Error semantico: No se puede modular ' + this.getStringTipo(this.izq.getTipo()) 
+                                + ' con ' + this.getStringTipo(this.der.getTipo())
+                                + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                }
             case operacion.COMPARACION:
 
                 break;

@@ -289,8 +289,90 @@ class operador{
                                 + ' en la linea ' + this.linea + ' y columna ' + this.columna);
                 }
             case operacion.MULTIPLICACION:
-
-                break;
+                this.tipo = this.tipoDominanteResta(this.izq.getTipo(), this.der.getTipo());
+                switch(this.izq.getTipo()){
+                    case tipo.INT:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = parseInt(this.der.getValor()); 
+                                resultado = opIzq * opDer;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor()); 
+                                resultado = opIzq * opDer;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                resultado = opIzq * opDer;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede multiplicar ' + this.getStringTipo(this.izq.getTipo()) 
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede multiplicar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.DOUBLE:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor()); 
+                                resultado = opIzq * opDer;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor()); 
+                                resultado = opIzq * opDer;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0)); 
+                                resultado = opIzq * opDer;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede multiplicar ' + this.getStringTipo(this.izq.getTipo()) 
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede multiplicar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.CHAR:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = this.izq.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                opDer = parseInt(this.der.getValor());
+                                resultado = opIzq * opDer;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = opIzq * opDer;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede multiplicar ' + this.getStringTipo(this.izq.getTipo()) 
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede multiplicar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    default:
+                        errores.agregarError('semantico', 
+                                                'No se puede multiplicar ' + this.getStringTipo(this.izq.getTipo()) 
+                                                + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                this.linea, this.columna);
+                        return ('Error semantico: No se puede multiplicar ' + this.getStringTipo(this.izq.getTipo()) 
+                                + ' con ' + this.getStringTipo(this.der.getTipo())
+                                + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                }
             case operacion.DIVISION:
 
                 break;

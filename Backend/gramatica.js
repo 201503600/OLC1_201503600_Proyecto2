@@ -122,6 +122,9 @@ break;
 case 38:
  this.$ = new operador(operacion.RESTA,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
 break;
+case 39:
+ this.$ = new operador(operacion.MULTIPLICACION,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
+break;
 case 49:
  this.$ = new primitivo(tipo.INT, $$[$0]);
 break;

@@ -622,6 +622,25 @@ class operador{
                                 + ' con ' + this.getStringTipo(this.der.getTipo())
                                 + ' en la linea ' + this.linea + ' y columna ' + this.columna);
                 }
+            case operacion.NEGACION:
+                switch(this.izq.getTipo()){
+                    case tipo.INT:
+                        this.tipo = tipo.INT;
+                        opIzq = parseInt(this.izq.getValor());
+                        resultado = -1 * opIzq;
+                        return resultado;
+                    case tipo.DOUBLE:
+                        this.tipo = tipo.DOUBLE;
+                        opIzq = parseFloat(this.izq.getValor());
+                        resultado = -1 * opIzq;
+                        return resultado;
+                    default:
+                        errores.agregarError('semantico', 
+                                                'No se puede negar ' + this.getStringTipo(this.izq.getTipo()), 
+                                                this.linea, this.columna);
+                        return ('Error semantico: No se puede negar ' + this.getStringTipo(this.izq.getTipo()) 
+                                + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                }
             case operacion.COMPARACION:
 
                 break;

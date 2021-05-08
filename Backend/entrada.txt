@@ -274,3 +274,10 @@ print("hola " % 60.5);
 print("hola " % false);
 print("hola " % 'a');
 print("hola " % "mundo!");
+
+/******* NEGACION UNARIA *******/
+print(-4);
+print(-2.82);
+print(-true);
+print(-'d');
+print(-"hola");

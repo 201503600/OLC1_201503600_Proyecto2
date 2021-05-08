@@ -205,7 +205,7 @@ expresion
     | expresion DIVISION expresion          { $$ = new operador(operacion.DIVISION,$1,$3,this._$.first_line, this._$.first_column); }
     | expresion MODULO expresion            { $$ = new operador(operacion.MODULO,$1,$3,this._$.first_line, this._$.first_column); }
     | expresion POTENCIA expresion          { $$ = new operador(operacion.POTENCIA,$1,$3,this._$.first_line, this._$.first_column); }
-    | RESTA expresion %prec UMENOS               
+    | RESTA expresion %prec UMENOS          { $$ = new operador(operacion.NEGACION,$2,null,this._$.first_line, this._$.first_column); }            
     | PAR_IZQ expresion PAR_DER
     | casteo expresion
     | unitarios

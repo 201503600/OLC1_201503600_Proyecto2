@@ -7,15 +7,16 @@ const operacion = {
     DIVISION: "5",
     MODULO: "6",
     POTENCIA: "7",
-    COMPARACION: "8",
-    DIFERENTE: "9",
-    MAYORIGUAL: "10",
-    MENORIGUAL: "11",
-    MAYOR: "12",
-    MENOR: "13",
-    OR: "14",
-    AND: "15",
-    NOT: "16"
+    NEGACION: "8",
+    COMPARACION: "9",
+    DIFERENTE: "10",
+    MAYORIGUAL: "11",
+    MENORIGUAL: "12",
+    MAYOR: "13",
+    MENOR: "14",
+    OR: "15",
+    AND: "16",
+    NOT: "17"
 }
 
 module.exports = operacion;

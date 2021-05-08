@@ -22,6 +22,8 @@ class _if extends instruccion{
     ejecutar(){
         for(let i = 0; i < this.condiciones.length; i++){
             let resultado = this.condiciones[i].getValor();
+            console.log(this.condiciones[i]);
+            console.log(resultado);
             if (this.condiciones[i].getTipo() === tipo.BOOLEAN){
                 if (resultado){
                     /* Se cumple la condicion y se recorren las sentencias */
@@ -56,9 +58,6 @@ class _if extends instruccion{
                 }
             }else{
                 /* Se agrega a errores semanticos */
-                console.log('Valor de i ' + i);
-                console.log('Lineas ' + this.linea);
-                console.log('Columnas ' + this.columna);
                 errores.agregarError('semantico', 'La condicion debe ser un valor booleano', this.linea[i], this.columna[i]);
             }
         }

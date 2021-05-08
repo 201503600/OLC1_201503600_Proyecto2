@@ -281,3 +281,33 @@ print(-2.82);
 print(-true);
 print(-'d');
 print(-"hola");
+
+if(4>4){
+  print("4 es mayor a 4");
+}else if (4 < 3){
+  print("4 es mayor a 3");
+}else if ("hola"){
+  print("3 es menor a 4");
+}else{
+  print("No cumplio ninguna condicion");
+}
+
+if (25 > 50) { 
+  print(“Mayor que 50”); 
+  //Más sentencias 
+} else if (25 <= 50 && 25 > 0) { 
+  print (“Menor que 50”); 
+  if (25 > 25) { 
+    print(“Número mayor que 25”); 
+    //Más sentencias 
+  } else { 
+    print(“Número menor o igual que 25”); 
+    //Más sentencias 
+  } 
+  //Más sentencias 
+} else { 
+  print(“Número negativo”); 
+  //Más sentencias 
+}
+
+print(4+4*4-8^2 <= 0 && !false);

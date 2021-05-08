@@ -21,6 +21,13 @@ class operador{
         let opIzq;
         let opDer;
         let resultado;
+        //console.log('IZQ: ' + (this.izq === operador)?'operador':'primitivo');
+        //console.log('DER: ' + (this.der === operador)?'operador':'primitivo');
+        if(this.izq instanceof operador)
+            this.izq.getValor();
+        if(this.der instanceof operador)
+            this.der.getValor();
+
         switch (this.operacion){
             case operacion.INCREMENTO:
 

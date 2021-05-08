@@ -98,7 +98,7 @@ break;
 case 5: case 7:
  this.$ = $$[$0]; 
 break;
-case 6: case 17:
+case 6: case 17: case 44:
  this.$ = $$[$0-1]; 
 break;
 case 8:
@@ -112,6 +112,33 @@ case 20:
 break;
 case 21:
  console.log($$[$0-3]); 
+break;
+case 28:
+ this.$ = new operador(operacion.OR,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
+break;
+case 29:
+ this.$ = new operador(operacion.AND,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
+break;
+case 30:
+ this.$ = new operador(operacion.NOT,$$[$0],null,this._$.first_line, this._$.first_column); 
+break;
+case 31:
+ this.$ = new operador(operacion.COMPARACION,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
+break;
+case 32:
+ this.$ = new operador(operacion.DIFERENTE,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
+break;
+case 33:
+ this.$ = new operador(operacion.MENOR,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
+break;
+case 34:
+ this.$ = new operador(operacion.MENORIGUAL,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
+break;
+case 35:
+ this.$ = new operador(operacion.MAYOR,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
+break;
+case 36:
+ this.$ = new operador(operacion.MAYORIGUAL,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 
 break;
 case 37:
  this.$ = new operador(operacion.SUMA,$$[$0-2],$$[$0],this._$.first_line, this._$.first_column); 

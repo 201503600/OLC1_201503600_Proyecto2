@@ -642,32 +642,786 @@ class operador{
                                 + ' en la linea ' + this.linea + ' y columna ' + this.columna);
                 }
             case operacion.COMPARACION:
-
-                break;
+                this.tipo = tipo.BOOLEAN;
+                switch(this.izq.getTipo()){
+                    case tipo.INT:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq == opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq == opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                resultado = (opIzq == opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.DOUBLE:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq == opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq == opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                resultado = (opIzq == opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.BOOLEAN:
+                        switch(this.der.getTipo()){
+                            case tipo.BOOLEAN:
+                                opIzq = (this.izq.getValor().toString() == 'true')?true:false;
+                                opDer = (this.der.getValor().toString() == 'true')?true:false;
+                                resultado = (opIzq == opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.CHAR:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseInt(this.izq.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq == opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq == opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                opDer = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                resultado = (opIzq == opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.STRING:
+                        switch(this.der.getTipo()){
+                            case tipo.STRING:
+                                opIzq = this.izq.getValor().toString();
+                                opDer = this.der.getValor().toString();
+                                resultado = (opIzq == opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                }
             case operacion.DIFERENTE:
-
-                break;
+                this.tipo = tipo.BOOLEAN;
+                switch(this.izq.getTipo()){
+                    case tipo.INT:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq != opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq != opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                resultado = (opIzq != opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.DOUBLE:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq != opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq != opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                resultado = (opIzq != opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.BOOLEAN:
+                        switch(this.der.getTipo()){
+                            case tipo.BOOLEAN:
+                                opIzq = (this.izq.getValor().toString() == 'true')?true:false;
+                                opDer = (this.der.getValor().toString() == 'true')?true:false;
+                                resultado = (opIzq != opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.CHAR:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseInt(this.izq.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq != opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq != opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                opDer = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                resultado = (opIzq != opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.STRING:
+                        switch(this.der.getTipo()){
+                            case tipo.STRING:
+                                opIzq = this.izq.getValor().toString();
+                                opDer = this.der.getValor().toString();
+                                resultado = (opIzq != opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                }
             case operacion.MAYORIGUAL:
-
-                break;
+                this.tipo = tipo.BOOLEAN;
+                switch(this.izq.getTipo()){
+                    case tipo.INT:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq >= opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq >= opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                resultado = (opIzq >= opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.DOUBLE:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq >= opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq >= opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                resultado = (opIzq >= opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.BOOLEAN:
+                        switch(this.der.getTipo()){
+                            case tipo.BOOLEAN:
+                                opIzq = (this.izq.getValor().toString() == 'true')?true:false;
+                                opDer = (this.der.getValor().toString() == 'true')?true:false;
+                                resultado = (opIzq >= opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.CHAR:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseInt(this.izq.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq >= opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq >= opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                opDer = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                resultado = (opIzq >= opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.STRING:
+                        switch(this.der.getTipo()){
+                            case tipo.STRING:
+                                opIzq = this.izq.getValor().toString();
+                                opDer = this.der.getValor().toString();
+                                resultado = (opIzq >= opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                }
             case operacion.MENORIGUAL:
-
-                break;
+                this.tipo = tipo.BOOLEAN;
+                switch(this.izq.getTipo()){
+                    case tipo.INT:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq <= opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq <= opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                resultado = (opIzq <= opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.DOUBLE:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq <= opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq <= opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                resultado = (opIzq <= opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.BOOLEAN:
+                        switch(this.der.getTipo()){
+                            case tipo.BOOLEAN:
+                                opIzq = (this.izq.getValor().toString() == 'true')?true:false;
+                                opDer = (this.der.getValor().toString() == 'true')?true:false;
+                                resultado = (opIzq <= opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.CHAR:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseInt(this.izq.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq <= opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq <= opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                opDer = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                resultado = (opIzq <= opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.STRING:
+                        switch(this.der.getTipo()){
+                            case tipo.STRING:
+                                opIzq = this.izq.getValor().toString();
+                                opDer = this.der.getValor().toString();
+                                resultado = (opIzq <= opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                }
             case operacion.MAYOR:
-
-                break;
+                this.tipo = tipo.BOOLEAN;
+                switch(this.izq.getTipo()){
+                    case tipo.INT:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq > opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq > opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                resultado = (opIzq > opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.DOUBLE:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq > opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq > opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                resultado = (opIzq > opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.BOOLEAN:
+                        switch(this.der.getTipo()){
+                            case tipo.BOOLEAN:
+                                opIzq = (this.izq.getValor().toString() == 'true')?true:false;
+                                opDer = (this.der.getValor().toString() == 'true')?true:false;
+                                resultado = (opIzq > opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.CHAR:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseInt(this.izq.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq > opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq > opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                opDer = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                resultado = (opIzq > opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.STRING:
+                        switch(this.der.getTipo()){
+                            case tipo.STRING:
+                                opIzq = this.izq.getValor().toString();
+                                opDer = this.der.getValor().toString();
+                                resultado = (opIzq > opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                }
             case operacion.MENOR:
-
-                break;
+                this.tipo = tipo.BOOLEAN;
+                switch(this.izq.getTipo()){
+                    case tipo.INT:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq < opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq < opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = parseInt(this.izq.getValor());
+                                opDer = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                resultado = (opIzq < opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.DOUBLE:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq < opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq < opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = parseFloat(this.izq.getValor());
+                                opDer = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                resultado = (opIzq < opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.BOOLEAN:
+                        switch(this.der.getTipo()){
+                            case tipo.BOOLEAN:
+                                opIzq = (this.izq.getValor().toString() == 'true')?true:false;
+                                opDer = (this.der.getValor().toString() == 'true')?true:false;
+                                resultado = (opIzq < opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.CHAR:
+                        switch(this.der.getTipo()){
+                            case tipo.INT:
+                                opIzq = parseInt(this.izq.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseInt(this.der.getValor());
+                                resultado = (opIzq < opDer)?true:false;
+                                return resultado;
+                            case tipo.DOUBLE:
+                                opIzq = parseFloat(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                                opDer = parseFloat(this.der.getValor());
+                                resultado = (opIzq < opDer)?true:false;
+                                return resultado;
+                            case tipo.CHAR:
+                                opIzq = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                opDer = this.der.getValor().toString().replace(/'/g,"").charCodeAt(0);
+                                resultado = (opIzq < opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                    case tipo.STRING:
+                        switch(this.der.getTipo()){
+                            case tipo.STRING:
+                                opIzq = this.izq.getValor().toString();
+                                opDer = this.der.getValor().toString();
+                                resultado = (opIzq < opDer)?true:false;
+                                return resultado;
+                            default:
+                                errores.agregarError('semantico', 
+                                                        'No se puede comparar ' + this.getStringTipo(this.izq.getTipo())
+                                                        + ' con ' + this.getStringTipo(this.der.getTipo()), 
+                                                        this.linea, this.columna);
+                                return ('Error semantico: No se puede comparar ' + this.getStringTipo(this.izq.getTipo()) 
+                                        + ' con ' + this.getStringTipo(this.der.getTipo())
+                                        + ' en la linea ' + this.linea + ' y columna ' + this.columna);
+                        }
+                }
             case operacion.OR:
-
-                break;
+                this.tipo = tipo.BOOLEAN;
+                switch(this.izq.getTipo()){
+                    case tipo.INT:
+                        opIzq = parseInt(this.izq.getValor());
+                        break;
+                    case tipo.DOUBLE:
+                        opIzq = parseFloat(this.izq.getValor());
+                        break;
+                    case tipo.BOOLEAN:
+                        opIzq = (this.izq.getValor().toString() == 'true')?true:false;
+                        break;
+                    case tipo.CHAR:
+                        opIzq = parseInt(this.izq.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                        break;
+                    case tipo.STRING:
+                        opIzq = this.izq.getValor().toString();
+                        break;
+                }
+                switch(this.der.getTipo()){
+                    case tipo.INT:
+                        opDer = parseInt(this.der.getValor());
+                        break;
+                    case tipo.DOUBLE:
+                        opDer = parseFloat(this.der.getValor());
+                        break;
+                    case tipo.BOOLEAN:
+                        opDer = (this.der.getValor().toString() == 'true')?true:false;
+                        break;
+                    case tipo.CHAR:
+                        opDer = parseInt(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                        break;
+                    case tipo.STRING:
+                        opDer = this.der.getValor().toString();
+                        break;
+                }
+                resultado = (opIzq || opDer);
+                return resultado;
             case operacion.AND:
-
-                break;
+                this.tipo = tipo.BOOLEAN;
+                switch(this.izq.getTipo()){
+                    case tipo.INT:
+                        opIzq = parseInt(this.izq.getValor());
+                        break;
+                    case tipo.DOUBLE:
+                        opIzq = parseFloat(this.izq.getValor());
+                        break;
+                    case tipo.BOOLEAN:
+                        opIzq = (this.izq.getValor().toString() == 'true')?true:false;
+                        break;
+                    case tipo.CHAR:
+                        opIzq = parseInt(this.izq.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                        break;
+                    case tipo.STRING:
+                        opIzq = this.izq.getValor().toString();
+                        break;
+                }
+                switch(this.der.getTipo()){
+                    case tipo.INT:
+                        opDer = parseInt(this.der.getValor());
+                        break;
+                    case tipo.DOUBLE:
+                        opDer = parseFloat(this.der.getValor());
+                        break;
+                    case tipo.BOOLEAN:
+                        opDer = (this.der.getValor().toString() == 'true')?true:false;
+                        break;
+                    case tipo.CHAR:
+                        opDer = parseInt(this.der.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                        break;
+                    case tipo.STRING:
+                        opDer = this.der.getValor().toString();
+                        break;
+                }
+                resultado = (opIzq && opDer);
+                return resultado;
             case operacion.NOT:
-
-                break;
+                this.tipo = tipo.BOOLEAN;
+                switch(this.izq.getTipo()){
+                    case tipo.INT:
+                        opIzq = parseInt(this.izq.getValor());
+                        break;
+                    case tipo.DOUBLE:
+                        opIzq = parseFloat(this.izq.getValor());
+                        break;
+                    case tipo.BOOLEAN:
+                        opIzq = (this.izq.getValor().toString() == 'true')?true:false;
+                        break;
+                    case tipo.CHAR:
+                        opIzq = parseInt(this.izq.getValor().toString().replace(/'/g,"").charCodeAt(0));
+                        break;
+                    case tipo.STRING:
+                        opIzq = this.izq.getValor().toString();
+                        break;
+                }
+                resultado = !(opIzq);
+                return resultado;
             default:
 
                 break;

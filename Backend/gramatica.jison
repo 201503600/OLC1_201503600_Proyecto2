@@ -190,15 +190,15 @@ asignacion
 ;
 
 expresion
-    : expresion OR expresion
-    | expresion AND expresion 
-    | NOT expresion 
-    | expresion COMPARACION expresion
-    | expresion DIFERENTE expresion
-    | expresion MENOR expresion
-    | expresion MEN_EQ expresion
-    | expresion MAYOR expresion
-    | expresion MAY_EQ expresion
+    : expresion OR expresion                { $$ = new operador(operacion.OR,$1,$3,this._$.first_line, this._$.first_column); }
+    | expresion AND expresion               { $$ = new operador(operacion.AND,$1,$3,this._$.first_line, this._$.first_column); }
+    | NOT expresion                         { $$ = new operador(operacion.NOT,$2,null,this._$.first_line, this._$.first_column); }
+    | expresion COMPARACION expresion       { $$ = new operador(operacion.COMPARACION,$1,$3,this._$.first_line, this._$.first_column); }
+    | expresion DIFERENTE expresion         { $$ = new operador(operacion.DIFERENTE,$1,$3,this._$.first_line, this._$.first_column); }
+    | expresion MENOR expresion             { $$ = new operador(operacion.MENOR,$1,$3,this._$.first_line, this._$.first_column); }
+    | expresion MEN_EQ expresion            { $$ = new operador(operacion.MENORIGUAL,$1,$3,this._$.first_line, this._$.first_column); }
+    | expresion MAYOR expresion             { $$ = new operador(operacion.MAYOR,$1,$3,this._$.first_line, this._$.first_column); }
+    | expresion MAY_EQ expresion            { $$ = new operador(operacion.MAYORIGUAL,$1,$3,this._$.first_line, this._$.first_column); }
     | expresion SUMA expresion              { $$ = new operador(operacion.SUMA,$1,$3,this._$.first_line, this._$.first_column); }
     | expresion RESTA expresion             { $$ = new operador(operacion.RESTA,$1,$3,this._$.first_line, this._$.first_column); }
     | expresion MULTIPLICACION expresion    { $$ = new operador(operacion.MULTIPLICACION,$1,$3,this._$.first_line, this._$.first_column); }
@@ -206,18 +206,18 @@ expresion
     | expresion MODULO expresion            { $$ = new operador(operacion.MODULO,$1,$3,this._$.first_line, this._$.first_column); }
     | expresion POTENCIA expresion          { $$ = new operador(operacion.POTENCIA,$1,$3,this._$.first_line, this._$.first_column); }
     | RESTA expresion %prec UMENOS          { $$ = new operador(operacion.NEGACION,$2,null,this._$.first_line, this._$.first_column); }            
-    | PAR_IZQ expresion PAR_DER
+    | PAR_IZQ expresion PAR_DER             { $$ = $2; }
     | casteo expresion
     | unitarios
     | llamada
     | sent_nativas
-    | ENTERO            { $$ = new primitivo(tipo.INT, $1);}
-    | DECIMAL           { $$ = new primitivo(tipo.DOUBLE, $1); }
-    | CADENA            { $$ = new primitivo(tipo.STRING, $1); }
-    | CARACTER          { $$ = new primitivo(tipo.CHAR, $1); }
-    | IDENTIFICADOR     {  }
-    | RTRUE             { $$ = new primitivo(tipo.BOOLEAN, $1); }
-    | RFALSE            { $$ = new primitivo(tipo.BOOLEAN, $1); }
+    | ENTERO                                { $$ = new primitivo(tipo.INT, $1);}
+    | DECIMAL                               { $$ = new primitivo(tipo.DOUBLE, $1); }
+    | CADENA                                { $$ = new primitivo(tipo.STRING, $1); }
+    | CARACTER                              { $$ = new primitivo(tipo.CHAR, $1); }
+    | IDENTIFICADOR                         {  }
+    | RTRUE                                 { $$ = new primitivo(tipo.BOOLEAN, $1); }
+    | RFALSE                                { $$ = new primitivo(tipo.BOOLEAN, $1); }
 ;
 
 unitarios

@@ -2,7 +2,9 @@ var fs = require('fs');
 var parser = require('./gramatica');
 var arbol = require('./AST/recorrido_arbol');
 const errores = require('./Arbol/Error/listaError');
+const display = require('./Arbol/Salida/display');
 const output = require('./Arbol/Salida/output');
+const Entorno = require('./Arbol/entorno');
 const instruccion = require('./Arbol/Instrucciones/instruccion');
 const expresion = require('./Arbol/Expresiones/expresion');
 
@@ -39,7 +41,9 @@ app.post('/', function(req, res){
     //console.log(raiz.recorrer_arbolito3(parser.parse(data.toString())));
     output.limpiar();
     errores.limpiar();
+    display.limpiar();
 
+    let global = new Entorno(null, null);
     let raiz = null;
     raiz = parser.parse(texto);
     //console.log(errores);
@@ -47,7 +51,7 @@ app.post('/', function(req, res){
     //console.log(JSON.stringify(raiz));
     for(let i = 0; i<raiz.length; i++){
         if (raiz[i] instanceof instruccion){
-            raiz[i].ejecutar();
+            raiz[i].ejecutar(global);
         }
     }  
     for(let i = 0; i<errores.getSize(); i++){

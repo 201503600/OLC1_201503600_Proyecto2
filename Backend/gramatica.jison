@@ -8,13 +8,21 @@
     //var raiz;
 
     const errores = require('./Arbol/Error/listaError');
-    const print = require('./Arbol/print');
-    const _if = require('./Arbol/if');
-    const operacion = require('./Arbol/operaciones');
-    const operador = require('./Arbol/operador');
-    const tipo = require('./Arbol/tipos');
-    const primitivo = require('./Arbol/primitivo');
-    
+    const declaracion = require('./Arbol/Instrucciones/declaracion');
+    const asignacion = require('./Arbol/Instrucciones/asignacion');
+    const print = require('./Arbol/Instrucciones/print');
+    const _if = require('./Arbol/Instrucciones/if');
+    const _switch = require('./Arbol/Instrucciones/switch');
+    const _while = require('./Arbol/Instrucciones/while');
+    const _doWhile = require('./Arbol/Instrucciones/do_while');
+    const _break = require('./Arbol/Instrucciones/break');
+    const _continue = require('./Arbol/Instrucciones/continue');
+
+    const operacion = require('./Arbol/Expresiones/operaciones');
+    const operador = require('./Arbol/Expresiones/operador');
+    const tipo = require('./Arbol/Expresiones/tipos');
+    const primitivo = require('./Arbol/Expresiones/primitivo');
+    const id = require('./Arbol/Expresiones/identificador');
 %}
 /* Definición Léxica */
 %lex
@@ -32,85 +40,85 @@
 
 /**************** Operadores Aritmeticos *************/
 
-"++"                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'INCREMENTO';}
-"--"                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'DECREMENTO';}
-"+"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'SUMA';}
-"-"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RESTA';}
-"*"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'MULTIPLICACION';}
-"/"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'DIVISION';}
-"^"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'POTENCIA';}
-"%"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'MODULO';}
+"++"                {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'INCREMENTO';}
+"--"                {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'DECREMENTO';}
+"+"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'SUMA';}
+"-"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RESTA';}
+"*"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'MULTIPLICACION';}
+"/"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'DIVISION';}
+"^"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'POTENCIA';}
+"%"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'MODULO';}
 
 /**************** Operadores Relacionales *************/
 
-"=="                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'COMPARACION';}
-"!="                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'DIFERENTE';}
-"<="                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'MEN_EQ';}
-">="                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'MAY_EQ';}
-">"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'MAYOR';}
-"<"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'MENOR';}
+"=="                {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'COMPARACION';}
+"!="                {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'DIFERENTE';}
+"<="                {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'MEN_EQ';}
+">="                {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'MAY_EQ';}
+">"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'MAYOR';}
+"<"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'MENOR';}
 
 /**************** Operadores Logicos *************/
 
-"||"                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'OR';}
-"&&"                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'AND';}
-"!"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'NOT';}
+"||"                {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'OR';}
+"&&"                {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'AND';}
+"!"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'NOT';}
 
 /**************** Simbolos *************/
 
-"="                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'IGUAL';}
-"?"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'TERNARIO';}
-":"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'COLON';}
-"("                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'PAR_IZQ';}
-")"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'PAR_DER';}
-"["                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'COR_IZQ';}
-"]"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'COR_DER';}
-"{"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'LLAVE_IZQ';}
-"}"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'LLAVE_DER';}
-","                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'COMMA';}
-";"                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'SEMICOLON';}
-"."                 {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'DOT';}
+"="                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'IGUAL';}
+"?"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'TERNARIO';}
+":"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'COLON';}
+"("                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'PAR_IZQ';}
+")"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'PAR_DER';}
+"["                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'COR_IZQ';}
+"]"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'COR_DER';}
+"{"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'LLAVE_IZQ';}
+"}"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'LLAVE_DER';}
+","                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'COMMA';}
+";"                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'SEMICOLON';}
+"."                 {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'DOT';}
 
 /**************** Palabras Reservadas *************/
 
-"void"              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RVOID';}
-"int"               {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RINT';}
-"double"            {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RDOUBLE';}
-"boolean"           {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RBOOLEAN';}
-"char"              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RCHAR';}
-"string"            {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RSTRING';}
-"new"               {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RNEW';}
-"if"                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RIF';}
-"else"              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RELSE';}
-"print"             {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RPRINT';}
-"switch"            {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RSWITCH';}
-"case"              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RCASE';}
-"default"           {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RDEFAULT';}
-"break"             {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RBREAK';}
-"continue"          {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RCONTINUE';}
-"return"            {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RRETURN';}
-"while"             {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RWHILE';}
-"for"               {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RFOR';}
-"do"                {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RDO';}
-"tolower"           {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RTO_LOWER';}
-"toupper"           {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RTO_UPPER';}
-"length"            {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RLENGTH';}
-"truncate"          {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RTRUNCATE';}
-"round"             {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RROUND';}
-"typeof"            {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RTYPE_OF';}
-"tostring"          {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RTO_STRING';}
-"tochararray"       {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RTO_CHAR_ARRAY';}
-"exec"              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'REXEC';}
-"list"              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RLIST';}
+"void"              {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RVOID';}
+"int"               {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RINT';}
+"double"            {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RDOUBLE';}
+"boolean"           {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RBOOLEAN';}
+"char"              {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RCHAR';}
+"string"            {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RSTRING';}
+"new"               {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RNEW';}
+"if"                {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RIF';}
+"else"              {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RELSE';}
+"print"             {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RPRINT';}
+"switch"            {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RSWITCH';}
+"case"              {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RCASE';}
+"default"           {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RDEFAULT';}
+"break"             {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RBREAK';}
+"continue"          {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RCONTINUE';}
+"return"            {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RRETURN';}
+"while"             {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RWHILE';}
+"for"               {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RFOR';}
+"do"                {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RDO';}
+"tolower"           {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RTO_LOWER';}
+"toupper"           {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RTO_UPPER';}
+"length"            {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RLENGTH';}
+"truncate"          {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RTRUNCATE';}
+"round"             {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RROUND';}
+"typeof"            {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RTYPE_OF';}
+"tostring"          {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RTO_STRING';}
+"tochararray"       {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RTO_CHAR_ARRAY';}
+"exec"              {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'REXEC';}
+"list"              {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RLIST';}
 
 /**************** Expresiones Regulares *************/
-[0-9]+"."[0-9]+   {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'DECIMAL';}
-[0-9]+              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'ENTERO';}
-[\'\‘\’].[\'\’\‘]                           {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'CARACTER';}
-"true"              {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RTRUE';}
-"false"             {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'RFALSE';}
-[\"\“\”](([^\"\“\”\\])*([\\].)*)*[\"\“\”]          {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'CADENA'; }
-[A-Za-z]([A-Za-z]|[0-9]|"_")* {console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); return 'IDENTIFICADOR';}
+[0-9]+"."[0-9]+   {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'DECIMAL';}
+[0-9]+              {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'ENTERO';}
+[\'\‘\’].[\'\’\‘]                           {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'CARACTER';}
+"true"              {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RTRUE';}
+"false"             {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'RFALSE';}
+[\"\“\”](([^\"\“\”\\])*([\\].)*)*[\"\“\”]          {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'CADENA'; }
+[A-Za-z]([A-Za-z]|[0-9]|"_")* {/*console.log('Token: ' + yytext + ', linea: ' + yylloc.first_line + ', columna: ' + yylloc.first_column); */ return 'IDENTIFICADOR';}
 
 <<EOF>>                 return 'EOF';
 
@@ -156,37 +164,37 @@ sentencia
 ;
 
 sentencia_local
-    : inicializacion SEMICOLON
+    : inicializacion SEMICOLON      { $$ = $1; }
     | unitarios SEMICOLON
     | llamada SEMICOLON
     | sent_if                       { $$ = $1; }
-    | sent_switch                   {  }
-    | sent_while                    {  }
+    | sent_switch                   { $$ = $1; }
+    | sent_while                    { $$ = $1; }
     | sent_for                      {  }
-    | sent_dowhile                  {  }
+    | sent_dowhile                  { $$ = $1; }
     | sent_print SEMICOLON          { $$ = $1; }
 ;
 
 inicializacion
-    : declaracion
-    | asignacion
+    : declaracion       { $$ = $1; }
+    | asignacion        { $$ = $1; }
 ;
 
 declaracion 
-    : tipo IDENTIFICADOR { console.log($1); }
-    | tipo IDENTIFICADOR IGUAL expresion { console.log($1); }
+    : tipo IDENTIFICADOR { $$ = new declaracion($1, $2); }
+    | tipo IDENTIFICADOR IGUAL expresion { $$ = new declaracion($1, $2); $$.setValor($4); }
 ;
 
 tipo
-    : RINT
-    | RDOUBLE
-    | RCHAR
-    | RBOOLEAN
-    | RSTRING
+    : RINT      { $$ = tipo.INT; }
+    | RDOUBLE   { $$ = tipo.DOUBLE; }
+    | RCHAR     { $$ = tipo.CHAR; }
+    | RBOOLEAN  { $$ = tipo.BOOLEAN; }
+    | RSTRING   { $$ = tipo.STRING; }
 ;
 
 asignacion 
-    : IDENTIFICADOR IGUAL expresion 
+    : IDENTIFICADOR IGUAL expresion     { $$ = new asignacion($1, $3); }
 ;
 
 expresion
@@ -215,7 +223,7 @@ expresion
     | DECIMAL                               { $$ = new primitivo(tipo.DOUBLE, $1); }
     | CADENA                                { $$ = new primitivo(tipo.STRING, $1); }
     | CARACTER                              { $$ = new primitivo(tipo.CHAR, $1); }
-    | IDENTIFICADOR                         {  }
+    | IDENTIFICADOR                         { $$ = new id($1); }
     | RTRUE                                 { $$ = new primitivo(tipo.BOOLEAN, $1); }
     | RFALSE                                { $$ = new primitivo(tipo.BOOLEAN, $1); }
 ;
@@ -251,18 +259,18 @@ bloque_instrucciones
 ;
 
 sent_switch
-    : RSWITCH PAR_IZQ expresion PAR_DER LLAVE_IZQ cases_list default LLAVE_DER
-    | RSWITCH PAR_IZQ expresion PAR_DER LLAVE_IZQ cases_list LLAVE_DER
-    | RSWITCH PAR_IZQ expresion PAR_DER LLAVE_IZQ default LLAVE_DER
+    : RSWITCH PAR_IZQ expresion PAR_DER LLAVE_IZQ cases_list default LLAVE_DER  { $$ = new _switch($3); $$.setCases($6[0].cond,$6[1].inst); $$.setDefault($7); }
+    | RSWITCH PAR_IZQ expresion PAR_DER LLAVE_IZQ cases_list LLAVE_DER          { $$ = new _switch($3); $$.setCases($6[0].cond,$6[1].inst); }
+    | RSWITCH PAR_IZQ expresion PAR_DER LLAVE_IZQ default LLAVE_DER             { $$ = new _switch($3); $$.setDefault($6); }
 ;
 
 cases_list
-    : cases_list RCASE expresion COLON instrucciones
-    | RCASE expresion COLON instrucciones
+    : cases_list RCASE expresion COLON instrucciones    { $1[0].cond.push($3); $1[1].inst.push($5); $$ = $1; }
+    | RCASE expresion COLON instrucciones               { $$ = [{cond:[$2]},{inst:[$4]}]; }
 ;
 
 default
-    : RDEFAULT COLON instrucciones
+    : RDEFAULT COLON instrucciones  { $$ = $3; }
 ;
 
 instrucciones
@@ -271,15 +279,15 @@ instrucciones
 ;
 
 instruccion 
-    : RBREAK SEMICOLON              {  }
-    | RCONTINUE SEMICOLON           {  }
+    : RBREAK SEMICOLON              { $$ = new _break(@1.first_line, @1.first_column); }
+    | RCONTINUE SEMICOLON           { $$ = new _continue(@1.first_line, @1.first_column); }
     | RRETURN SEMICOLON             {  }
     | RRETURN expresion SEMICOLON   {  }
     | sentencia_local               { $$ = $1; }
 ;
 
 sent_while
-    : RWHILE PAR_IZQ expresion PAR_DER bloque_instrucciones
+    : RWHILE PAR_IZQ expresion PAR_DER bloque_instrucciones     { $$ = new _while($3,$5,@1.first_line,@1.first_column); }
 ;
 
 sent_for
@@ -288,6 +296,9 @@ sent_for
 
 sent_dowhile
     : RDO bloque_instrucciones RWHILE PAR_IZQ expresion PAR_DER SEMICOLON
+    {
+        $$ = new _doWhile($5,$2,@1.first_line,@1.first_column);
+    }
 ;
 
 metodo

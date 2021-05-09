@@ -4,7 +4,8 @@ const tipo = {
     DOUBLE:"2",
     CHAR:"3",
     STRING:"4",
-    BOOLEAN:"5"
+    BOOLEAN:"5",
+    ERROR: "6"
 }
 
 module.exports = tipo;

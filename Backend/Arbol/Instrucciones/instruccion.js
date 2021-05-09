@@ -1,5 +1,5 @@
 class instruccion{
-    ejecutar(){}
+    ejecutar(entorno){}
 }
 
 module.exports = instruccion;

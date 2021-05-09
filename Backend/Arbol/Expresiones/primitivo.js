@@ -7,11 +7,11 @@ class primitivo extends expresion{
         this.tipo = tipoValor;
     }
 
-    getTipo(){
+    getTipo(entorno){
         return this.tipo;
     }
 
-    getValor(){
+    getValor(entorno){
         return this.valor;
     }
 }

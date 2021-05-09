@@ -9,13 +9,14 @@ class id extends expresion{
     }
 
     getTipo(entorno){
-        return entorno.obtenerSimbolo(this.nombre).getTipo(entorno);
+        let sim = entorno.obtenerSimbolo(this.nombre);
+        return (sim === null)?tipo.ERROR:sim.getTipo();
     }
 
     getValor(entorno){
         let sim = entorno.obtenerSimbolo(this.nombre);
-        console.log(sim);
-        console.log(sim.getValor());
+        //console.log(sim);
+        //console.log(sim.getValor());
         return (sim === null)?new simbolo(tipo.ERROR, '', ''):sim.valor;
     }
 }

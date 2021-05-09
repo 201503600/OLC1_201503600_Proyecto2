@@ -12,6 +12,7 @@ const express = require('express');
 const cors = require('cors');
 //funcion que procesa datos antes de que el servidor lo reciba
 const morgan = require('morgan');
+const operador = require('./Arbol/Expresiones/operador');
 const app = express();
 
 //configuraciones
@@ -50,8 +51,12 @@ app.post('/', function(req, res){
     
     //console.log(JSON.stringify(raiz));
     for(let i = 0; i<raiz.length; i++){
+        //console.log(raiz[i]);
         if (raiz[i] instanceof instruccion){
             raiz[i].ejecutar(global);
+        }else if (raiz[i] instanceof operador){
+            console.log("Entra aca");
+            raiz[i].getValor(global);
         }
     }  
     for(let i = 0; i<errores.getSize(); i++){

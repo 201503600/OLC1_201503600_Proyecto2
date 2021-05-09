@@ -311,3 +311,33 @@ if (25 > 50) {
 }
 
 print(4+4*4-8^2 <= 0 && !false);
+
+
+/****** PRUEBA ***/
+int a;
+int b = 0;
+string cadena = "hola mundo";
+
+if (b != 0){
+  print("No es igual a 0");
+}else{
+  print("Es igual a 0");
+}
+
+while(b < 5){
+  b = b + 1;
+}
+
+do{
+  print(b);
+  b = b - 1;
+  if (b == -5){
+    break;
+  }
+}while(true);
+print(b);
+b++;
+print(b);
+b--;
+print(b);
+b = c*4;

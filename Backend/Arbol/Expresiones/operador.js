@@ -2,6 +2,8 @@ const expresion = require( './expresion');
 const operacion = require('./operaciones');
 const tipo = require('./tipos');
 const errores = require('../Error/listaError');
+const id = require('./identificador');
+const simbolo = require('../simbolo');
 
 class operador{
     constructor(tipoOperacion, izq, der, linea, columna){
@@ -30,11 +32,48 @@ class operador{
 
         switch (this.operacion){
             case operacion.INCREMENTO:
-                
-                break;
+                // 1: VERIFICAR QUE SEA UN ID
+                console.log("Reconoce incremento");
+                if (this.izq instanceof id){
+                    // 2: SE VERIFICA QUE EL TIPO DEL ID SEA INT O DOUBLE
+                    if (this.izq.getTipo(entorno) === tipo.INT || this.izq.getTipo(entorno) === tipo.DOUBLE){
+                        // 3: SE OBTIENE EL VALOR Y SE AUMENTA EN 1
+                        opIzq = parseFloat(this.izq.getValor(entorno)) + parseFloat(1);
+                        // 4: SE SETEA EL NUEVO VALOR
+                        entorno.setSimbolo(this.izq.nombre, new simbolo(this.izq.getTipo(entorno), this.izq.nombre, opIzq));
+                        this.tipo = this.izq.getTipo(entorno);
+                        return opIzq;
+                    }else{
+                        errores.agregarError('semantico', 'La variable no es de tipo numerico', this.linea, this.columna);
+                        this.tipo = tipo.ERROR;
+                        return resultado;
+                    }
+                }else{
+                    errores.agregarError('semantico', 'La operacion incremento solo se puede aplicar a variables', this.linea, this.columna);
+                    this.tipo = tipo.ERROR;
+                    return resultado;
+                }
             case operacion.DECREMENTO:
-
-                break;
+                // 1: VERIFICAR QUE SEA UN ID
+                if (this.izq instanceof id){
+                    // 2: SE VERIFICA QUE EL TIPO DEL ID SEA INT O DOUBLE
+                    if (this.izq.getTipo(entorno) === tipo.INT || this.izq.getTipo(entorno) === tipo.DOUBLE){
+                        // 3: SE OBTIENE EL VALOR Y DISMINUYE EN 1
+                        opIzq = parseFloat(this.izq.getValor(entorno)) - parseFloat(1);
+                        // 4: SE SETEA EL NUEVO VALOR
+                        entorno.setSimbolo(this.izq.nombre, new simbolo(this.izq.getTipo(entorno), this.izq.nombre, opIzq));
+                        this.tipo = this.izq.getTipo(entorno);
+                        return opIzq;
+                    }else{
+                        errores.agregarError('semantico', 'La variable no es de tipo numerico', this.linea, this.columna);
+                        this.tipo = tipo.ERROR;
+                        return resultado;
+                    }
+                }else{
+                    errores.agregarError('semantico', 'La operacion decremento solo se puede aplicar a variables', this.linea, this.columna);
+                    this.tipo = tipo.ERROR;
+                    return resultado;
+                }
             case operacion.SUMA:
                 this.tipo = this.tipoDominanteSuma(this.izq.getTipo(entorno), this.der.getTipo(entorno));
                 if (this.tipo === tipo.ERROR){
@@ -180,7 +219,7 @@ class operador{
                             case tipo.STRING:
                                 opIzq = this.izq.getValor(entorno).toString().replace(/\"/g,"");
                                 opDer = this.der.getValor(entorno).toString().replace(/\"/g,""); 
-                                console.log('Izquierdo: ' + opIzq + ' Derecho: ' + opDer);
+                                //console.log('Izquierdo: ' + opIzq + ' Derecho: ' + opDer);
                                 resultado = opIzq + opDer;
                                 return resultado; 
                         }

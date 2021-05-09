@@ -95,10 +95,10 @@ break;
 case 4: case 72:
  this.$ = [$$[$0]]; 
 break;
-case 5: case 7: case 12: case 13: case 14: case 16: case 18: case 19: case 60: case 70: case 77:
+case 5: case 7: case 12: case 13: case 14: case 15: case 16: case 18: case 19: case 46: case 60: case 70: case 77:
  this.$ = $$[$0]; 
 break;
-case 6: case 9: case 17: case 44: case 63:
+case 6: case 9: case 10: case 17: case 44: case 63:
  this.$ = $$[$0-1]; 
 break;
 case 8:
@@ -106,9 +106,6 @@ case 8:
         console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
         errores.agregarError('sintáctico', 'Token inesperado \'' + yytext + '\'', this._$.first_line, this._$.first_column);
     
-break;
-case 15: case 75: case 76:
-  
 break;
 case 20:
  this.$ = new declaracion($$[$0-1], $$[$0]); 
@@ -200,6 +197,12 @@ break;
 case 54: case 55:
  this.$ = new primitivo(tipo.BOOLEAN, $$[$0]); 
 break;
+case 56:
+ this.$ = new operador(operacion.INCREMENTO,$$[$0-1],null,this._$.first_line, this._$.first_column); 
+break;
+case 57:
+ this.$ = new operador(operacion.DECREMENTO,$$[$0-1],null,this._$.first_line, this._$.first_column); 
+break;
 case 59:
  $$[$0-2].agregarElse($$[$0]); 
 break;
@@ -233,8 +236,18 @@ break;
 case 74:
  this.$ = new _continue(_$[$0-1].first_line, _$[$0-1].first_column); 
 break;
+case 75: case 76:
+  
+break;
 case 78:
- this.$ = new _while($$[$0-2],$$[$0],_$[$0-4].first_line,_$[$0-4].first_column); 
+ 
+        this.$ = new _while($$[$0-2],$$[$0],_$[$0-4].first_line,_$[$0-4].first_column); 
+    
+break;
+case 79:
+
+        this.$ = new _for($$[$0-6], $$[$0-4], $$[$0-2], $$[$0], _$[$0-8].first_line, _$[$0-8].first_column);
+    
 break;
 case 80:
 
@@ -531,6 +544,7 @@ _handle_error:
     const _switch = require('./Arbol/Instrucciones/switch');
     const _while = require('./Arbol/Instrucciones/while');
     const _doWhile = require('./Arbol/Instrucciones/do_while');
+    const _for = require('./Arbol/Instrucciones/for');
     const _break = require('./Arbol/Instrucciones/break');
     const _continue = require('./Arbol/Instrucciones/continue');
 

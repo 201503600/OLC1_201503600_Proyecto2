@@ -18,7 +18,7 @@ class asignacion extends instruccion{
             //console.log(this.valor);
             //if (this.valor instanceof expresion){
                 let v = this.valor.getValor(entorno);
-                console.log(v);
+                //console.log(v);
                 if (tipo === this.valor.getTipo(entorno))
                     entorno.setSimbolo(this.nombre, new simbolo(tipo, this.nombre, v));
                 else

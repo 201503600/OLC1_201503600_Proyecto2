@@ -15,6 +15,7 @@
     const _switch = require('./Arbol/Instrucciones/switch');
     const _while = require('./Arbol/Instrucciones/while');
     const _doWhile = require('./Arbol/Instrucciones/do_while');
+    const _for = require('./Arbol/Instrucciones/for');
     const _break = require('./Arbol/Instrucciones/break');
     const _continue = require('./Arbol/Instrucciones/continue');
 
@@ -165,12 +166,12 @@ sentencia
 
 sentencia_local
     : inicializacion SEMICOLON      { $$ = $1; }
-    | unitarios SEMICOLON
+    | unitarios SEMICOLON           { $$ = $1; }
     | llamada SEMICOLON
     | sent_if                       { $$ = $1; }
     | sent_switch                   { $$ = $1; }
     | sent_while                    { $$ = $1; }
-    | sent_for                      {  }
+    | sent_for                      { $$ = $1; }
     | sent_dowhile                  { $$ = $1; }
     | sent_print SEMICOLON          { $$ = $1; }
 ;
@@ -216,7 +217,7 @@ expresion
     | RESTA expresion %prec UMENOS          { $$ = new operador(operacion.NEGACION,$2,null,this._$.first_line, this._$.first_column); }            
     | PAR_IZQ expresion PAR_DER             { $$ = $2; }
     | casteo expresion
-    | unitarios
+    | unitarios                             { $$ = $1; }
     | llamada
     | sent_nativas
     | ENTERO                                { $$ = new primitivo(tipo.INT, $1);}
@@ -229,8 +230,8 @@ expresion
 ;
 
 unitarios
-    : expresion INCREMENTO
-    | expresion DECREMENTO
+    : expresion INCREMENTO  { $$ = new operador(operacion.INCREMENTO,$1,null,this._$.first_line, this._$.first_column); }
+    | expresion DECREMENTO  { $$ = new operador(operacion.DECREMENTO,$1,null,this._$.first_line, this._$.first_column); }
 ;
 
 casteo
@@ -287,11 +288,17 @@ instruccion
 ;
 
 sent_while
-    : RWHILE PAR_IZQ expresion PAR_DER bloque_instrucciones     { $$ = new _while($3,$5,@1.first_line,@1.first_column); }
+    : RWHILE PAR_IZQ expresion PAR_DER bloque_instrucciones     
+    { 
+        $$ = new _while($3,$5,@1.first_line,@1.first_column); 
+    }
 ;
 
 sent_for
     : RFOR PAR_IZQ inicializacion SEMICOLON expresion SEMICOLON expresion PAR_DER bloque_instrucciones
+    {
+        $$ = new _for($3, $5, $7, $9, @1.first_line, @1.first_column);
+    }
 ;
 
 sent_dowhile

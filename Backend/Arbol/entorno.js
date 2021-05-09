@@ -23,15 +23,15 @@ class Entorno{
     }
 
     setSimbolo(nombre, simbolo){
-        console.log("Entra a set simbolo");
+        //console.log("Entra a set simbolo");
         for(let a = this; a != null; a = a.padre){
             for(let i = 0; i < a.tsimbolos.length; i++){
-                console.log(a.tsimbolos[i].nombre.toString().toLowerCase());
-                console.log(nombre.toString().toLowerCase());
+                //console.log(a.tsimbolos[i].nombre.toString().toLowerCase());
+                //console.log(nombre.toString().toLowerCase());
                 if (a.tsimbolos[i].nombre.toString().toLowerCase() === nombre.toString().toLowerCase()){
                     a.tsimbolos[i].valor = simbolo;
-                    console.log(a.tsimbolos[i].valor);
-                    console.log(this.tsimbolos[i].valor);
+                    //console.log(a.tsimbolos[i].valor);
+                    //console.log(this.tsimbolos[i].valor);
                     return;
                 }
             }

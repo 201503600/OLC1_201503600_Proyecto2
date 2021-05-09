@@ -1,8 +1,9 @@
 const errores = require('./Error/listaError');
 
 class Entorno{
-    constructor(padre, global){
+    constructor(nombre, padre, global){
         this.tsimbolos = [];
+        this.nombre = nombre;
         this.padre = padre;
         this.global = global;
     }
@@ -28,8 +29,9 @@ class Entorno{
             for(let i = 0; i < a.tsimbolos.length; i++){
                 //console.log(a.tsimbolos[i].nombre.toString().toLowerCase());
                 //console.log(nombre.toString().toLowerCase());
-                if (a.tsimbolos[i].nombre.toString().toLowerCase() === nombre.toString().toLowerCase()){
-                    a.tsimbolos[i].valor = simbolo;
+                let aux = a.tsimbolos[i];
+                if (aux.nombre.toString().toLowerCase() === nombre.toString().toLowerCase()){
+                    aux.valor = simbolo;
                     //console.log(a.tsimbolos[i].valor);
                     //console.log(this.tsimbolos[i].valor);
                     return;
@@ -43,7 +45,11 @@ class Entorno{
             if (this.tsimbolos[i].nombre.toString().toLowerCase() === nombre.toString().toLowerCase())
                 return true;
         }
-        return false;
+        if (this.padre === null)
+            return false;
+        else{
+            return this.padre.existeSimbolo(nombre);
+        }
     }
 }
 

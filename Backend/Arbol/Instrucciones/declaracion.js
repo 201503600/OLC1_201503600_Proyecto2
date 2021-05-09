@@ -21,14 +21,21 @@ class declaracion extends instruccion{
             //console.log(this.tipo);
             if (this.valor instanceof expresion){
                 let v = this.valor.getValor(entorno);
-                if (this.tipo === this.valor.getTipo(entorno))
+                if (this.tipo === this.valor.getTipo(entorno)){
                     entorno.agregarSimbolo(this.nombre, new simbolo(this.tipo, this.nombre, v));
-                else
+                    return v;
+                }else
                     errores.agregarError('semantico', 'El tipo de la variable ' + this.nombre + ' debe ser ' + this.getStringTipo(), -1, -1);
-            }            
+            }  else {
+                /* SE CREA LA VARIABLE CON UN VALOR DEFAULT */
+                let v = this.getValorDefault();
+                entorno.agregarSimbolo(this.nombre, new simbolo(this.tipo, this.nombre, v));
+                return v;
+            }          
         }else{
             errores.agregarError('semantico', 'Ya existe la variable ' + this.nombre, -1, -1);
         }
+        return null;
     }
 
     getStringTipo(){
@@ -45,6 +52,21 @@ class declaracion extends instruccion{
                 return 'cadena';
         }
         return null;
+    }
+
+    getValorDefault(){
+        switch(this.tipo){
+            case tipo.INT:
+                return 0;
+            case tipo.DOUBLE:
+                return 0;
+            case tipo.BOOLEAN:
+                return true;
+            case tipo.CHAR:
+                return '';
+            case tipo.STRING:
+                return "";
+        }
     }
 }
 

@@ -5,6 +5,7 @@ const errores = require('../Error/listaError');
 const display = require('../Salida/display');
 const _break = require('./break');
 const _continue = require('./continue');
+const Entorno = require('../entorno');
 
 class _if extends instruccion{
     constructor(listaCondicion, listaSentenciasV, linea, columna){
@@ -27,14 +28,16 @@ class _if extends instruccion{
             if (this.condiciones[i].getTipo(entorno) === tipo.BOOLEAN){
                 if (resultado){
                     /* Se cumple la condicion y se recorren las sentencias */
+                    let local = new Entorno('Sentencia de control If', entorno, entorno.global);
                     for(let j = 0; j < this.sentenciasV[i].length; j++){
-                        if (this.sentenciasV[i][j] instanceof expresion){
-                            let valor = this.sentenciasV[i][j].getValor(entorno); // Para incremento y decremento
+                        let d = this.sentenciasV[i][j];
+                        if (d instanceof expresion){
+                            let valor = d.getValor(local); // Para incremento y decremento
                             /*if this.sentencias[i] typeof _return{
                                 return valor;
                             }*/    
-                        }else if (this.sentenciasV[i][j] instanceof instruccion){
-                            let auxiliar = this.sentenciasV[i][j].ejecutar(entorno);
+                        }else if (d instanceof instruccion){
+                            let auxiliar = d.ejecutar(local);
                             if (auxiliar instanceof _break || auxiliar instanceof _continue){
                                 j = this.sentenciasV[i].length;
                                 return auxiliar;
@@ -48,16 +51,18 @@ class _if extends instruccion{
                         // No existe un else
                     }else{
                         // Existe un else y se ejecutan sus instrucciones
+                        let local = new Entorno('Sentencia de control Else', entorno, entorno.global);
                         for(let j = 0; j < this.sentenciasF.length; j++){
-                            if (this.sentenciasF[j] instanceof expresion){
-                                let valor = this.sentenciasF[j].getValor(entorno); // Para incremento y decremento
+                            let sentencia = this.sentenciasF[j];
+                            if (sentencia instanceof expresion){
+                                let valor = sentencia.getValor(local); // Para incremento y decremento
                                 /*if this.sentencias[i] typeof _return{
-                                    return valor;
+                                    return valor; 
                                 }*/    
-                            }else if (this.sentenciasF[j] instanceof instruccion){
-                                let auxiliar = this.sentenciasF[j].ejecutar(entorno);
+                            }else if (sentencia instanceof instruccion){
+                                let auxiliar = sentencia.ejecutar(local);
                                 if (auxiliar instanceof _break || auxiliar instanceof _continue){
-                                    j = this.sentenciasF[j].length;
+                                    j = this.sentenciasF.length;
                                     return auxiliar;
                                 }
                             }

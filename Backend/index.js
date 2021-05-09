@@ -44,7 +44,7 @@ app.post('/', function(req, res){
     errores.limpiar();
     display.limpiar();
 
-    let global = new Entorno(null, null);
+    let global = new Entorno('Global',null, null);
     let raiz = null;
     raiz = parser.parse(texto);
     //console.log(errores);
@@ -54,8 +54,8 @@ app.post('/', function(req, res){
         //console.log(raiz[i]);
         if (raiz[i] instanceof instruccion){
             raiz[i].ejecutar(global);
-        }else if (raiz[i] instanceof operador){
-            console.log("Entra aca");
+        }else if (raiz[i] instanceof expresion){
+            //console.log("Entra aca");
             raiz[i].getValor(global);
         }
     }  

@@ -5,6 +5,7 @@ const errores = require('../Error/listaError');
 const display = require('../Salida/display');
 const _break = require('./break');
 const _continue = require('./continue');
+const Entorno = require('../entorno');
 
 class _doWhile extends instruccion{
     constructor(condicion, instrucciones, linea, columna){
@@ -17,22 +18,25 @@ class _doWhile extends instruccion{
 
     ejecutar(entorno){
         display.agregar("ciclo");
-        for(let i = 0; i < this.instrucciones.length; i++){
-            if (this.instrucciones[i] instanceof expresion){
-                let valor = this.instrucciones[i].getValor(entorno); // Para incremento y decremento
+        let local = new Entorno('Ciclo Do-While',entorno, entorno.global);
+        let sizeLista = this.instrucciones.length;
+        for(let i = 0; i < sizeLista; i++){
+            let inst = this.instrucciones[i];
+            if (inst instanceof expresion){
+                let valor = inst.getValor(local); // Para incremento y decremento
                 /*if this.sentencias[i] typeof _return{
                     return valor;
                 }*/    
-            }else if (this.instrucciones[i] instanceof instruccion){
-                let auxiliar = this.instrucciones[i].ejecutar(entorno);
+            }else if (inst instanceof instruccion){
+                let auxiliar = inst.ejecutar(local);
                 if (auxiliar instanceof _break){
                     break;
                 }else if ( auxiliar instanceof _continue) {
-                    i = this.instrucciones.length - 1;
+                    i = sizeLista - 1;
                 }
             }
-            if (i == this.instrucciones.length - 1 && this.condicion.getValor(entorno) 
-                && this.condicion.getTipo(entorno) === tipo.BOOLEAN)
+            if (i == sizeLista - 1 && this.condicion.getValor(local) 
+                && this.condicion.getTipo(local) === tipo.BOOLEAN)
                 i = -1;
         }
         if (display.getUltimo() === 'ciclo')

@@ -1,7 +1,6 @@
 const instruccion = require("./instruccion");
 const errores = require('../Error/listaError');
 const tipo = require('../Expresiones/tipos');
-const expresion = require("../Expresiones/expresion");
 const simbolo = require('../simbolo');
 
 class asignacion extends instruccion{
@@ -19,14 +18,16 @@ class asignacion extends instruccion{
             //if (this.valor instanceof expresion){
                 let v = this.valor.getValor(entorno);
                 //console.log(v);
-                if (tipo === this.valor.getTipo(entorno))
+                if (tipo === this.valor.getTipo(entorno)){
                     entorno.setSimbolo(this.nombre, new simbolo(tipo, this.nombre, v));
-                else
+                    return v;
+                }else
                     errores.agregarError('semantico', 'El tipo de la variable ' + this.nombre + ' debe ser ' + this.getStringTipo(tipo), -1, -1);
             //}            
         }else{
             errores.agregarError('semantico', 'No existe la variable ' + this.nombre, -1, -1);
         }
+        return null;
     }
 
     getStringTipo(t){

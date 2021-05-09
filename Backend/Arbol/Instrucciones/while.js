@@ -5,6 +5,7 @@ const errores = require('../Error/listaError');
 const display = require('../Salida/display');
 const _break = require('./break');
 const _continue = require('./continue');
+const Entorno = require('../entorno');
 
 class _while extends instruccion{
     constructor(condicion, instrucciones, linea, columna){
@@ -18,26 +19,31 @@ class _while extends instruccion{
     ejecutar(entorno){
         let resVal = this.condicion.getValor(entorno);
         let resTipo = this.condicion.getTipo(entorno);
+        //console.log('Se evalua condicion');
         if (resTipo === tipo.BOOLEAN){
             if (resVal){
+                //console.log('Se crea entorno local de while');
                 display.agregar("ciclo");
-                let i = 0;
-                for(i; i < this.instrucciones.length; i++){
-                    if (this.instrucciones[i] instanceof expresion){
-                        let valor = this.instrucciones[i].getValor(entorno); // Para incremento y decremento
+                let local = new Entorno('Ciclo While', entorno,entorno.global); 
+                for(let i = 0; i < this.instrucciones.length; i++){
+                    let inst = this.instrucciones[i];
+                    //console.log('Se ejecuta instruccion ' + inst);
+                    if (inst instanceof expresion){
+                        let valor = inst.getValor(local); // Para incremento y decremento
                         /*if this.sentencias[i] typeof _return{
                             return valor;
                         }*/    
-                    }else if (this.instrucciones[i] instanceof instruccion){
-                        let auxiliar = this.instrucciones[i].ejecutar(entorno);
+                    }else if (inst instanceof instruccion){
+                        let auxiliar = inst.ejecutar(local);
                         if (auxiliar instanceof _break){
                             break;
                         }else if ( auxiliar instanceof _continue) {
                             i = this.instrucciones.length - 1;
                         }
                     }
-                    if (i === (this.instrucciones.length - 1) && this.condicion.getValor(entorno) 
-                        && this.condicion.getTipo(entorno) === tipo.BOOLEAN){
+                    //console.log('Se evalua nuevamente la condicion de while');
+                    if (i === (this.instrucciones.length - 1) && this.condicion.getValor(local) 
+                        && this.condicion.getTipo(local) === tipo.BOOLEAN){
                             i = -1;
                         }
                 }

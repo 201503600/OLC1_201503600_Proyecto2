@@ -5,6 +5,7 @@ const errores = require('../Error/listaError');
 const display = require('../Salida/display');
 const _break = require('./break');
 const _continue = require('./continue');
+const _return = require('./return');
 const Entorno = require('../entorno');
 
 class _doWhile extends instruccion{
@@ -33,6 +34,9 @@ class _doWhile extends instruccion{
                     break;
                 }else if ( auxiliar instanceof _continue) {
                     i = sizeLista - 1;
+                }else if ( auxiliar instanceof _return) {
+                    display.deleteUltimo();
+                    return auxiliar;
                 }
             }
             if (i == sizeLista - 1 && this.condicion.getValor(local) 

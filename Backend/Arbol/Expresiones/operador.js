@@ -4,6 +4,7 @@ const tipo = require('./tipos');
 const errores = require('../Error/listaError');
 const id = require('./identificador');
 const simbolo = require('../simbolo');
+const llamada = require('../Instrucciones/llamada');
 
 class operador extends expresion{
     constructor(tipoOperacion, izq, der, linea, columna){
@@ -26,6 +27,7 @@ class operador extends expresion{
         let resultado;
         //console.log('IZQ: ' + (this.izq === operador)?'operador':'primitivo');
         //console.log('DER: ' + (this.der === operador)?'operador':'primitivo');
+        let aux;
         let valIzq;
         let typeIzq;
         let valDer;
@@ -33,10 +35,18 @@ class operador extends expresion{
         if(this.izq instanceof expresion){
             valIzq = this.izq.getValor(entorno);
             typeIzq = this.izq.getTipo(entorno);
+        }else if (this.izq instanceof llamada){
+            aux = this.izq.ejecutar(entorno);
+            valIzq = aux.getValor(entorno);
+            typeIzq = aux.getTipo(entorno);
         }
         if(this.der instanceof expresion){
             valDer = this.der.getValor(entorno);
             typeDer = this.der.getTipo(entorno);
+        }else if (this.der instanceof llamada){
+            aux = this.der.ejecutar(entorno);
+            valDer = aux.getValor(entorno);
+            typeDer = aux.getTipo(entorno);
         }
         switch (this.operacion){
             case operacion.INCREMENTO:
@@ -48,7 +58,7 @@ class operador extends expresion{
                         // 3: SE OBTIENE EL VALOR Y SE AUMENTA EN 1
                         opIzq = parseFloat(valIzq) + parseFloat(1);
                         // 4: SE SETEA EL NUEVO VALOR
-                        entorno.setSimbolo(this.izq.nombre, new simbolo(typeIzq, this.izq.nombre, opIzq));
+                        entorno.setSimbolo(this.izq.nombre, new simbolo(typeIzq, this.izq.nombre, opIzq, this.linea, this.columna));
                         this.tipo = typeIzq;
                         return opIzq;
                     }else{
@@ -69,7 +79,7 @@ class operador extends expresion{
                         // 3: SE OBTIENE EL VALOR Y DISMINUYE EN 1
                         opIzq = parseFloat(valIzq) - parseFloat(1);
                         // 4: SE SETEA EL NUEVO VALOR
-                        entorno.setSimbolo(this.izq.nombre, new simbolo(typeIzq, this.izq.nombre, opIzq));
+                        entorno.setSimbolo(this.izq.nombre, new simbolo(typeIzq, this.izq.nombre, opIzq, this.linea, this.columna));
                         this.tipo = typeIzq;
                         return opIzq;
                     }else{

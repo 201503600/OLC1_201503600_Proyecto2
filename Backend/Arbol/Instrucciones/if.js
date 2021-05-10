@@ -6,6 +6,7 @@ const display = require('../Salida/display');
 const _break = require('./break');
 const _continue = require('./continue');
 const Entorno = require('../entorno');
+const _return = require('./return');
 
 class _if extends instruccion{
     constructor(listaCondicion, listaSentenciasV, linea, columna){
@@ -38,7 +39,7 @@ class _if extends instruccion{
                             }*/    
                         }else if (d instanceof instruccion){
                             let auxiliar = d.ejecutar(local);
-                            if (auxiliar instanceof _break || auxiliar instanceof _continue){
+                            if (auxiliar instanceof _break || auxiliar instanceof _continue || auxiliar instanceof _return){
                                 j = this.sentenciasV[i].length;
                                 return auxiliar;
                             }
@@ -61,7 +62,7 @@ class _if extends instruccion{
                                 }*/    
                             }else if (sentencia instanceof instruccion){
                                 let auxiliar = sentencia.ejecutar(local);
-                                if (auxiliar instanceof _break || auxiliar instanceof _continue){
+                                if (auxiliar instanceof _break || auxiliar instanceof _continue || auxiliar instanceof _return){
                                     j = this.sentenciasF.length;
                                     return auxiliar;
                                 }

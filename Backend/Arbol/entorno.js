@@ -1,15 +1,49 @@
 const errores = require('./Error/listaError');
+const reportes = require('./Salida/reporte');
+const tipo = require('./Expresiones/tipos');
 
 class Entorno{
     constructor(nombre, padre, global){
         this.tsimbolos = [];
         this.nombre = nombre;
         this.padre = padre;
-        this.global = global;
+        if (global === null)
+            this.global = this;
+        else
+            this.global = global;
     }
 
     agregarSimbolo(nombre, simbolo){
         this.tsimbolos.push({'nombre':nombre,'valor': simbolo});
+        let t;
+        if(simbolo.getParametros() !== undefined){
+            if(simbolo.getTipo() === tipo.VOID)
+                t = 'Metodo';
+            else
+                t = 'Funcion';
+        }else
+            t = 'Variable';
+        reportes.agregarSimbolo('<tr><th scope="row">' + simbolo.getNombre() + '</th>' +
+                                '<td>' + t + '</td><td>' + this.getStringTipo(simbolo.getTipo()) + '</td>' +
+                                '<td>' + this.nombre + '</td><td>' + simbolo.getLinea() + '</td>' +
+                                '<td>' + simbolo.getColumna() + '</td></tr>');
+    }
+
+    getStringTipo(t){
+        switch(t){
+            case tipo.VOID:
+                return 'Void';
+            case tipo.INT:
+                return 'Entero';
+            case tipo.DOUBLE:
+                return 'Decimal';
+            case tipo.BOOLEAN:
+                return 'Booleano';
+            case tipo.CHAR:
+                return 'Caracter';
+            case tipo.STRING:
+                return 'Cadena';
+        }
     }
 
     obtenerSimbolo(nombre){
@@ -50,6 +84,28 @@ class Entorno{
         else{
             return this.padre.existeSimbolo(nombre);
         }
+    }
+
+    existeMetodo(nombre){
+        let tablaGlobal = this.global.tsimbolos;
+        for(let i = 0; i < tablaGlobal.length; i++){
+            let sim = tablaGlobal[i];
+            if (sim.nombre.toString().toLowerCase() === nombre.toString().toLowerCase()
+                && sim.valor.getParametros() !== undefined)
+                return true;
+        }
+        return false;
+    }
+
+    obtenerMetodo(nombre){
+        let tablaGlobal = this.global.tsimbolos;
+        for(let i = 0; i < tablaGlobal.length; i++){
+            let sim = tablaGlobal[i];
+            if (sim.nombre.toString().toLowerCase() === nombre.toString().toLowerCase()
+                && sim.valor.getParametros() !== undefined)
+                return sim.valor;
+        }
+        return null;
     }
 }
 

@@ -1,6 +1,7 @@
 var fs = require('fs'); 
 var parser = require('./gramatica');
 var arbol = require('./AST/recorrido_arbol');
+const reportes = require('./Arbol/Salida/reporte');
 const errores = require('./Arbol/Error/listaError');
 const display = require('./Arbol/Salida/display');
 const output = require('./Arbol/Salida/output');
@@ -43,6 +44,7 @@ app.post('/', function(req, res){
     output.limpiar();
     errores.limpiar();
     display.limpiar();
+    reportes.limpiar();
 
     let global = new Entorno('Global',null, null);
     let raiz = null;
@@ -60,11 +62,26 @@ app.post('/', function(req, res){
         }
     }  
     for(let i = 0; i<errores.getSize(); i++){
-        //console.log(errores.getError(i));
-        output.agregarTexto('--->' + errores.getError(i).getMensaje() + '\n');
+        console.log(errores.getError(i));
+        let err = errores.getError(i);
+        output.agregarTexto('--->' + err.getMensaje() + '\n');
+        reportes.agregarError('<tr><th scope="row">' + (i+1) + '</th><td>' + err.getTipo() + '</td>' +
+                                '<td>' + err.getDescripcion() + '</td>' +
+                                '<td>' + err.getLinea() + '</td><td>' + err.getColumna() + '</td></tr>');
     }
+
+    reportes.finError();
+    reportes.finSimbolo();
     output.agregarTexto('Ejecutado correctamente!\n');
     res.send(output.getSalida());
+});
+
+app.get('/repError', function(req, res){
+    res.send(reportes.getError());
+});
+
+app.get('/repSimbolo', function(req, res){
+    res.send(reportes.getSimbolo());
 });
 
 //iniciando servidor

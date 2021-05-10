@@ -9,6 +9,7 @@ const declaracion = require('./declaracion');
 const simbolo = require('../simbolo');
 const asignacion = require('./asignacion');
 const Entorno = require('../entorno');
+const _return = require('./return');
 
 class _for extends instruccion{
     constructor(inicializacion, condicion, accion, instrucciones, linea, columna){
@@ -65,6 +66,9 @@ class _for extends instruccion{
                     break;
                 }else if ( auxiliar instanceof _continue) {
                     i = this.instrucciones.length - 1;
+                }else if ( auxiliar instanceof _return) {
+                    display.deleteUltimo();
+                    return auxiliar;
                 }
             }
             if (i === this.instrucciones.length -1){
@@ -80,7 +84,7 @@ class _for extends instruccion{
                         return;
                     }else{
                         if (sim.getTipo() === this.accion.getTipo(local))
-                            entorno.setSimbolo(name, new simbolo(sim.getTipo(), name, newValor));
+                            entorno.setSimbolo(name, new simbolo(sim.getTipo(), name, newValor, this.linea, this.columna));
                         else{
                             errores.agregarError('semantico', 
                                                     'El tipo de ' + name + ' debe ser ' + getStringTipo(sim.getTipo()), 

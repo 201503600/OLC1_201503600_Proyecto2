@@ -17,7 +17,7 @@ class id extends expresion{
         let sim = entorno.obtenerSimbolo(this.nombre);
         //console.log(sim);
         //console.log(sim.getValor());
-        return (sim === null)?new simbolo(tipo.ERROR, '', ''):sim.valor;
+        return (sim === null)?new simbolo(tipo.ERROR, '', '', -1, -1):sim.valor;
     }
 }
 

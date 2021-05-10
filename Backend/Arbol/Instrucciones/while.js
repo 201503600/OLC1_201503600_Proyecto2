@@ -6,6 +6,7 @@ const display = require('../Salida/display');
 const _break = require('./break');
 const _continue = require('./continue');
 const Entorno = require('../entorno');
+const _return = require('./return');
 
 class _while extends instruccion{
     constructor(condicion, instrucciones, linea, columna){
@@ -39,6 +40,9 @@ class _while extends instruccion{
                             break;
                         }else if ( auxiliar instanceof _continue) {
                             i = this.instrucciones.length - 1;
+                        }else if ( auxiliar instanceof _return) {
+                            display.deleteUltimo();
+                            return auxiliar;
                         }
                     }
                     //console.log('Se evalua nuevamente la condicion de while');

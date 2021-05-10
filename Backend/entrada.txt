@@ -341,3 +341,65 @@ print(b);
 b--;
 print(b);
 b = c*4;
+
+int metodo1 = 4;
+
+int metodo1(int factor, String c){
+  /* lineas de codigo */
+  print(factor + c);
+  /**** mas lineas de codigo ***/
+  switch(5){
+    case 5:
+  		return 6;
+  }
+}
+
+void metodo1(){
+}
+
+if(true){
+	metodo1(5,"hola");
+  	print(metodo1);
+}
+
+exec metodo1(12," SI SE PUEDE \O/");
+
+
+/******** FUNCIONES RECURSIVAS **********/
+/**** FACTORIAL ****/
+int factorial (int numero) {
+  if (numero==0){
+    return 1;
+  }else{
+    return numero * factorial(numero-1);
+  }
+}
+
+print(factorial(3));
+/**** HANOI ****/
+void towerOfHanoi(int n, char from_rod, char to_rod, char aux_rod)
+    {
+        if (n == 1)
+        {
+            print("Move disk 1 from rod " +  from_rod + " to rod " + to_rod);
+            return;
+        }
+        towerOfHanoi(n-1, from_rod, aux_rod, to_rod);
+        print("Move disk " + n + " from rod " +  from_rod + " to rod " + to_rod);
+        towerOfHanoi(n-1, aux_rod, to_rod, from_rod);
+    }
+
+int torres = 4;
+towerOfHanoi(torres, 'A', 'C', 'B');
+/**** CODIGO ACKERMAN ****/
+int solve_rec(int m, int n){
+        if(m == 0){
+            return n+1;
+        }else if(m > 0 && n == 0){
+            return solve_rec(m-1,1);
+        }else{
+            return solve_rec(m-1,solve_rec(m,n-1));
+        }
+}    
+
+print(solve_rec(3,3));

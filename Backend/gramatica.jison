@@ -18,6 +18,10 @@
     const _for = require('./Arbol/Instrucciones/for');
     const _break = require('./Arbol/Instrucciones/break');
     const _continue = require('./Arbol/Instrucciones/continue');
+    const _return = require('./Arbol/Instrucciones/return');
+    const metodo = require('./Arbol/Instrucciones/metodo');
+    const llamada = require('./Arbol/Instrucciones/llamada');
+    const exec = require('./Arbol/Instrucciones/exec');
 
     const operacion = require('./Arbol/Expresiones/operaciones');
     const operador = require('./Arbol/Expresiones/operador');
@@ -167,7 +171,7 @@ sentencia
 sentencia_local
     : inicializacion SEMICOLON      { $$ = $1; }
     | unitarios SEMICOLON           { $$ = $1; }
-    | llamada SEMICOLON
+    | llamada SEMICOLON             { $$ = $1; }
     | sent_if                       { $$ = $1; }
     | sent_switch                   { $$ = $1; }
     | sent_while                    { $$ = $1; }
@@ -182,8 +186,8 @@ inicializacion
 ;
 
 declaracion 
-    : tipo IDENTIFICADOR { $$ = new declaracion($1, $2); }
-    | tipo IDENTIFICADOR IGUAL expresion { $$ = new declaracion($1, $2); $$.setValor($4); }
+    : tipo IDENTIFICADOR { $$ = new declaracion($1, $2, @1.first_line, @1.first_column); }
+    | tipo IDENTIFICADOR IGUAL expresion { $$ = new declaracion($1, $2, @1.first_line, @1.first_column); $$.setValor($4); }
 ;
 
 tipo
@@ -195,7 +199,7 @@ tipo
 ;
 
 asignacion 
-    : IDENTIFICADOR IGUAL expresion     { $$ = new asignacion($1, $3); }
+    : IDENTIFICADOR IGUAL expresion     { $$ = new asignacion($1, $3, @1.first_line, @1.first_column); }
 ;
 
 expresion
@@ -218,7 +222,7 @@ expresion
     | PAR_IZQ expresion PAR_DER             { $$ = $2; }
     | casteo expresion
     | unitarios                             { $$ = $1; }
-    | llamada
+    | llamada                               { $$ = $1; }
     | sent_nativas
     | ENTERO                                { $$ = new primitivo(tipo.INT, $1);}
     | DECIMAL                               { $$ = new primitivo(tipo.DOUBLE, $1); }
@@ -282,8 +286,8 @@ instrucciones
 instruccion 
     : RBREAK SEMICOLON              { $$ = new _break(@1.first_line, @1.first_column); }
     | RCONTINUE SEMICOLON           { $$ = new _continue(@1.first_line, @1.first_column); }
-    | RRETURN SEMICOLON             {  }
-    | RRETURN expresion SEMICOLON   {  }
+    | RRETURN SEMICOLON             { $$ = new _return(null, @1.first_line, @1.first_column); }
+    | RRETURN expresion SEMICOLON   { $$ = new _return($2, @1.first_line, @1.first_column); }
     | sentencia_local               { $$ = $1; }
 ;
 
@@ -309,23 +313,25 @@ sent_dowhile
 ;
 
 metodo
-    : RVOID IDENTIFICADOR PAR_IZQ parametros PAR_DER bloque_instrucciones
-    | RVOID IDENTIFICADOR PAR_IZQ PAR_DER bloque_instrucciones
+    : RVOID IDENTIFICADOR PAR_IZQ parametros PAR_DER bloque_instrucciones   { $$ = new metodo(tipo.VOID, $2, $4, $6, @1.first_line, @1.first_column); }
+    | RVOID IDENTIFICADOR PAR_IZQ PAR_DER bloque_instrucciones              { $$ = new metodo(tipo.VOID, $2, [], $5, @1.first_line, @1.first_column); }
+    | tipo IDENTIFICADOR PAR_IZQ parametros PAR_DER bloque_instrucciones    { $$ = new metodo($1, $2, $4, $6, @1.first_line, @1.first_column); }
+    | tipo IDENTIFICADOR PAR_IZQ PAR_DER bloque_instrucciones               { $$ = new metodo($1, $2, [], $5, @1.first_line, @1.first_column); }
 ;
 
 parametros
-    : parametros COMMA tipo IDENTIFICADOR
-    | tipo IDENTIFICADOR
+    : parametros COMMA tipo IDENTIFICADOR   { $1.push({tipo:$3, nombre:$4}); $$ = $1; }
+    | tipo IDENTIFICADOR                    { $$ = [{tipo:$1, nombre:$2}]; }
 ;
 
 llamada
-    : IDENTIFICADOR PAR_IZQ params_llamada PAR_DER
-    | IDENTIFICADOR PAR_IZQ PAR_DER
+    : IDENTIFICADOR PAR_IZQ params_llamada PAR_DER  { $$ = new llamada($1, $3, @1.first_line, @1.first_column); }
+    | IDENTIFICADOR PAR_IZQ PAR_DER                 { $$ = new llamada($1, [], @1.first_line, @1.first_column); }
 ;
 
 params_llamada
-    : params_llamada COMMA expresion
-    | expresion
+    : params_llamada COMMA expresion    { $1.push($3); $$ = $1; }
+    | expresion                         { $$ = [$1]; }
 ;
 
 sent_print
@@ -372,32 +378,33 @@ funcion
 ;
 
 sent_exec
-    : REXEC IDENTIFICADOR PAR_IZQ PAR_DER
+    : REXEC llamada { $$ = new exec($2, @1.first_line, @1.first_column); }
+    /*: REXEC IDENTIFICADOR PAR_IZQ PAR_DER
     {
 
     }
     | REXEC IDENTIFICADOR PAR_IZQ list_val PAR_DER
     {
 
-    }
+    }*/
 ;
-
+/*
 list_val
     : list_val COMMA expresion 
     {
-        /*** GRAFICA **
         raiz = new Nodo("List_val","");
         raiz.agregarHijo($1);
         raiz.agregarHijo(new Nodo(",", "coma"));
         raiz.agregarHijo($3);
-            */
+            
         
     }
     | expresion 
     {
-        /*var aux = new Nodo("List_val","");
-        raiz.agregarHijo($1);*/
+        var aux = new Nodo("List_val","");
+        raiz.agregarHijo($1);
 
 
     }
 ;
+*/

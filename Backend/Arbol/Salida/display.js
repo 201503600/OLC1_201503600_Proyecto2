@@ -23,6 +23,14 @@ class Display{
         return '';
     }
 
+    getFuncion(){
+        for(let i = this.display.length - 1; i > -1; i--){
+            if (this.display[i] === 'funcion' || this.display[i] === 'metodo')
+                return true;
+        }
+        return false;
+    }
+
     deleteUltimo(){
         this.display.pop();
     }

@@ -1,8 +1,12 @@
 class simbolo{
-    constructor(tipo, nombre, valor){
+    constructor(tipo, nombre, valor, linea, columna){
         this.tipo = tipo;
         this.nombre = nombre;
         this.valor = valor;
+        this.linea = linea;
+        this.columna = columna;
+        this.parametros;
+        this.instrucciones;
     }
 
     getTipo(){
@@ -15,6 +19,30 @@ class simbolo{
 
     getValor(){
         return this.valor;
+    }
+
+    getLinea(){
+        return this.linea;
+    }
+
+    getColumna(){
+        return this.columna;
+    }
+
+    setParametros(params){
+        this.parametros = params;
+    }
+
+    getParametros(){
+        return this.parametros;
+    }
+
+    setInstrucciones(inst){
+        this.instrucciones = inst;
+    }
+
+    getInstrucciones(){
+        return this.instrucciones;
     }
 }
 

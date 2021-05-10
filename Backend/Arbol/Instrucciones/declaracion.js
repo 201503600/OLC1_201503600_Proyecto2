@@ -5,10 +5,12 @@ const expresion = require("../Expresiones/expresion");
 const simbolo = require('../simbolo');
 
 class declaracion extends instruccion{
-    constructor(tipo, nombre){
+    constructor(tipo, nombre, linea, columna){
         super();
         this.tipo = tipo;
         this.nombre = nombre;
+        this.linea = linea;
+        this.columna = columna;
         this.valor;
     }
 
@@ -22,18 +24,18 @@ class declaracion extends instruccion{
             if (this.valor instanceof expresion){
                 let v = this.valor.getValor(entorno);
                 if (this.tipo === this.valor.getTipo(entorno)){
-                    entorno.agregarSimbolo(this.nombre, new simbolo(this.tipo, this.nombre, v));
+                    entorno.agregarSimbolo(this.nombre, new simbolo(this.tipo, this.nombre, v, this.linea, this.columna));
                     return v;
                 }else
-                    errores.agregarError('semantico', 'El tipo de la variable ' + this.nombre + ' debe ser ' + this.getStringTipo(), -1, -1);
+                    errores.agregarError('semantico', 'El tipo de la variable ' + this.nombre + ' debe ser ' + this.getStringTipo(), this.linea, this.columna);
             }  else {
                 /* SE CREA LA VARIABLE CON UN VALOR DEFAULT */
                 let v = this.getValorDefault();
-                entorno.agregarSimbolo(this.nombre, new simbolo(this.tipo, this.nombre, v));
+                entorno.agregarSimbolo(this.nombre, new simbolo(this.tipo, this.nombre, v, this.linea, this.columna));
                 return v;
             }          
         }else{
-            errores.agregarError('semantico', 'Ya existe la variable ' + this.nombre, -1, -1);
+            errores.agregarError('semantico', 'Ya existe la variable ' + this.nombre, this.linea, this.columna);
         }
         return null;
     }

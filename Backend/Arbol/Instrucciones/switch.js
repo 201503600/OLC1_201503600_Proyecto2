@@ -5,6 +5,7 @@ const errores = require('../Error/listaError');
 const display = require('../Salida/display');
 const _break = require('./break');
 const Entorno = require('../entorno');
+const _return = require('./return');
 
 class _switch extends instruccion{
     constructor(valor){
@@ -41,16 +42,21 @@ class _switch extends instruccion{
                     for (let j = 0; j < this.listaCases[i].length; j++){
                         let inst = this.listaCases[i][j];
                         if (inst instanceof expresion){
+                            console.log('entra a switch');
                             let valor = inst.getValor(local); // Para incremento y decremento
                             /*if this.sentencias[i] typeof _return{
                                 return valor;
                             }*/    
                         }else if (inst instanceof instruccion){
                             let auxiliar = inst.ejecutar(local);
+                            console.log(auxiliar);
                             if (auxiliar instanceof _break){
                                 bandera = false;
                                 display.deleteUltimo();
                                 j = this.listaCases[i].length;
+                            }else if (auxiliar instanceof _return){
+                                display.deleteUltimo();
+                                return auxiliar;
                             }
                         }
                     }
@@ -70,11 +76,14 @@ class _switch extends instruccion{
                                     return valor;
                                 }*/    
                             }else if (def instanceof instruccion){
-                                def.ejecutar(local);
-                                if (def instanceof _break){
+                                let auxiliar = def.ejecutar(local);
+                                if (auxiliar instanceof _break){
                                     bandera = false;
                                     display.deleteUltimo();
                                     j = this.insDefault.length;
+                                }else if (auxiliar instanceof _return){
+                                    display.deleteUltimo();
+                                    return auxiliar;
                                 }
                             }
                         }

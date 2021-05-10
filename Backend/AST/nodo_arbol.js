@@ -6,9 +6,11 @@ class  Nodo_Arbol{
         this.hijos=[];
 
     }
+
     getValor(){
         this.valor;
     }
+    
     getTipo(){
         this.tipo;
     }

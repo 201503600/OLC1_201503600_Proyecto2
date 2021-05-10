@@ -62,10 +62,14 @@ function changeFuncMenu() {
 function viewReport() {
     var selectBox = document.getElementById("selectReport");
     var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+    document.getElementById("reporte").innerHTML = "";
+    console.log("Se realiza peticion para el reporte");
     if (selectedValue == "simbolos") {
         //window.open('tokens.html')
+        getReport('http://localhost:3000/repSimbolo');
     } else if (selectedValue == "errores") {
         //window.open('errores.html')
+        getReport('http://localhost:3000/repError');
     } else if (selectedValue == "ast") {
         /*var contenedor = document.getElementById("grafo");
         contenedor.innerHTML = `<h4>Grafo de python</h4><br><img src="images/astPython.png" style="vertical-align:middle;margin:0px 50px">`;*/
@@ -100,6 +104,31 @@ function sendText() {
     ).catch(
         error => {  console.error(error); 
                     document.getElementById("txtConsola").value = "Error: Seleccione una pestaña"; }
+    )
+}
+
+/*--------------------------------------Obtener reportes---------------------------------------*/
+function getReport(url) {
+    //console.log(document.getElementById(get_vent()).value);
+    //window.locationf="localhost:8000/?key=" + get_vent();
+    let config = {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, GET',
+            'Access-Control-Request-Method': '*',
+            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+        }
+      }
+    fetch(url, config).then(
+        response => response.text()
+    ).then(
+        (data) => { document.getElementById("reporte").innerHTML = data; }
+    ).catch(
+        error => {  console.error(error); 
+                    document.getElementById("txtConsola").value = "--->Error: No se pudo generar el reporte"; }
     )
 }
 

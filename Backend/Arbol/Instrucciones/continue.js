@@ -1,4 +1,5 @@
 const instruccion = require('./instruccion');
+const display = require("../Salida/display");
 
 class _continue extends instruccion{
     constructor(linea, columna){

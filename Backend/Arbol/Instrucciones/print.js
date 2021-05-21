@@ -11,10 +11,13 @@ class print extends instruccion{
 
     ejecutar(entorno){
         let resultado;
+        let r1;
         if (this.expresion instanceof expresion)
-            resultado = this.expresion.getValor(entorno).toString().replace(/\"/g,"");
-        else if (this.expresion instanceof llamada)
+            resultado = this.expresion.getValor(entorno);
+        else if (this.expresion instanceof llamada){
             resultado = this.expresion.ejecutar(entorno).getValor(entorno);
+        }
+        
         output.agregarTexto('> ' + resultado + '\n');
     }
 }

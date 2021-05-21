@@ -23,6 +23,7 @@ class llamada extends instruccion{
     }
 
     ejecutar(entorno){
+        console.log('nombre funcion ' + this.nombre);
         if (entorno.existeMetodo(this.nombre)){
             let metFunc = entorno.obtenerMetodo(this.nombre);
             let local;
@@ -113,6 +114,7 @@ class llamada extends instruccion{
                 display.deleteUltimo();
         }else
             errores.agregarError('semantico', 'No existe el metodo/funcion ' + this.nombre, this.linea, this.columna);
+        return new primitivo(tipo.ERROR, '');
     }
 }
 

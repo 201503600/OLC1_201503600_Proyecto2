@@ -5,6 +5,7 @@ const errores = require('../Error/listaError');
 const id = require('./identificador');
 const simbolo = require('../simbolo');
 const llamada = require('../Instrucciones/llamada');
+const primitivo = require('./primitivo');
 
 class operador extends expresion{
     constructor(tipoOperacion, izq, der, linea, columna){

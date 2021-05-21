@@ -14,6 +14,8 @@ class metodo extends instruccion{
     }
 
     ejecutar(entorno){
+        console.log(this.nombre);
+        console.log(this.parametros.length);
         if (!entorno.existeMetodo(this.nombre)){
             let sim = new simbolo(this.tipo, this.nombre, null, this.linea, this.columna);
             sim.setParametros(this.parametros);
